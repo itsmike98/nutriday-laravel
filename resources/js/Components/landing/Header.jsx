@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Header() {
+export default function Header({ loginRoute, registerRoute }) {
     return (
         <>
             <header
@@ -139,9 +139,11 @@ export default function Header() {
                         provides the tools and insights you need to stay on
                         track and reach your goals with ease
                     </p>
-                    <button className="mt-7 font-bold border-4 border-[#c7c7c7] px-8 py-1 rounded-xl hover:bg-[#c7c7c7] hover:px-12 hover:text-stone-900 ease-in duration-300">
-                        Join us!
-                    </button>
+                    <a href={loginRoute} className="inline-block">
+                        <button className="mt-7 font-bold border-4 border-[#c7c7c7] px-8 py-1 rounded-xl hover:bg-[#c7c7c7] hover:px-12 hover:text-stone-900 ease-in duration-300">
+                            Join us!
+                        </button>
+                    </a>
                 </div>
             </header>
         </>

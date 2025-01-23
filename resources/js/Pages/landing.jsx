@@ -10,12 +10,12 @@ import { Doughnut } from "react-chartjs-2";
 import "../Components/landing/counter";
 import TextRevealSecction from "@/Components/landing/TextRevealSecction";
 
-export default function Landing() {
+export default function Landing({ loginRoute, registerRoute }) {
     let chartColors = ["#D06363", "#638FD0", "#8DB768"];
 
     return (
         <>
-            <Header />
+            <Header loginRoute={loginRoute} registerRoute={registerRoute} />
 
             <main>
                 {/* texto inicial con efecto scroll */}
