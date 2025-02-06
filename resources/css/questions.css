@@ -1,0 +1,9 @@
+
+/* codigo para controlar los estilos de el field birth of year */
+.react-datepicker-wrapper{
+    width: 100%;
+}
+
+.react-datepicker__input-container input::placeholder {
+    color: #909090 !important;
+  }

@@ -5,6 +5,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "@css/landing/calories-section-styles.css";
 import "@css/landing/reach-your-goals-styles.css";
+import "@css/landing/nav-bar.css";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import "../Components/landing/counter";
@@ -12,10 +13,23 @@ import TextRevealSecction from "@/Components/landing/TextRevealSecction";
 
 export default function Landing({ loginRoute, registerRoute }) {
     let chartColors = ["#D06363", "#638FD0", "#8DB768"];
-
     return (
         <>
-            <Header loginRoute={loginRoute} registerRoute={registerRoute} />
+            <nav>
+                <div class="nav-container">
+                    <div>
+                        <a href="#" class="logo">Nutriday</a>
+                    </div>
+                    <div>
+                        <a href={loginRoute} class="nav-item">Login</a>
+                        <span>|</span>
+                        <a href={registerRoute} class="nav-item">Register</a>
+                    </div>
+                </div>
+            </nav>
+
+            {/* enviando el prop de la ruta de login para usarlo en el header */}
+            <Header loginRoute={loginRoute} />
 
             <main>
                 {/* texto inicial con efecto scroll */}
@@ -43,7 +57,7 @@ export default function Landing({ loginRoute, registerRoute }) {
                                         delay: 2500,
                                         disableOnInteraction: false,
                                     }}
-                                    //onSlideChangeTransitionStart={handleSlideChange}
+                                //onSlideChangeTransitionStart={handleSlideChange}
                                 >
                                     <SwiperSlide className="slide-img">
                                         <img src="/assets/images/mid-meal-take-control1.png" />

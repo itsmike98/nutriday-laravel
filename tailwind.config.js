@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ["Montserrat", "sans-serif"],
             },
+            boxShadow: {
+                'extra-dark': '0px 0px 30px rgba(0, 0, 0, 0.5)',
+              },
         },
     },
 

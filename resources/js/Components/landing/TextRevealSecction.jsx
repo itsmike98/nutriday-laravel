@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import "@css/landing/text-reveal.css";
-import { SplitText } from "@cyriacbr/react-split-text";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 

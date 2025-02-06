@@ -1,0 +1,21 @@
+Aqui explico como puedes pasar datos desde el front (React) al back y guardarlos en la base de datos.
+
+Para poder cumplir este cometido tenemos que tener claro el flujo de trabajo que hay que seguir,
+    -Primero tenemos que tener la tabla donde guardaremos la info en la db.
+    -Para esa tabla obiamente tenemos que tener un modelo, en el modelo 
+    tenemos que definir los datos que se podran rellenar masivamente:
+    //Selecciona la tabla con la que trabaja este modelo.
+    protected $table = 'user_physical_data';
+
+    // Permitir asignación masiva de estos campos.
+    protected $fillable = [
+        'user_id',
+        'height',
+        'weight',
+        'activity_level',
+        'main_goal',
+        'questions_answered'
+    ];
+
+    -Despues vamos a crear un controller que es el que va a enviar la info a la db:
+    Comando para crear el controller: php artisan make:controller ControllerName

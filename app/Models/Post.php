@@ -26,7 +26,8 @@ class Post extends Model
     }
 
 
-    // Esta funcion es para dar instrucciones a la base de datos de como guardar los datos y como mostrarlos en la vista. El nombre de la funcion debe ser el nombre del campo en la base de datos.
+    // Esta funcion es para dar instrucciones a la base de datos de como guardar los datos y como mostrarlos en la vista. 
+    // El nombre de la funcion debe ser el nombre del campo en la base de datos.
     protected function title(): Attribute
     {
         return Attribute::make(

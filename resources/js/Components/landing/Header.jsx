@@ -4,7 +4,7 @@ export default function Header({ loginRoute, registerRoute }) {
     return (
         <>
             <header
-                className="flex h-[80vh] items-center bg-cover bg-center bg-no-repeat"
+                className="flex h-[100vh] items-center bg-cover bg-center bg-no-repeat"
                 style={{
                     backgroundImage:
                         "linear-gradient(to top right, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0)), url('/assets/images/bg-landing-healthy-food.jpg')",

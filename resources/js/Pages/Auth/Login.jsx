@@ -64,6 +64,14 @@ export default function Login({ status, canResetPassword }) {
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
+                {canResetPassword && (
+                        <Link
+                            href={route("password.request")}
+                            className="rounded-md text-sm text-white underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
 
                 <div className="mt-4 block">
                     <label className="flex items-center">
@@ -74,21 +82,20 @@ export default function Login({ status, canResetPassword }) {
                                 setData("remember", e.target.checked)
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
+                         
+                        <p className="ms-2 text-sm text-white">
                             Remember me
-                        </span>
+                        </p>
                     </label>
                 </div>
 
                 <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route("password.request")}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                <Link
+                href={route("register")}
+                className="rounded-md text-sm text-white underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+                Not register yet?
+            </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
