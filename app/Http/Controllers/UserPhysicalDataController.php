@@ -7,11 +7,13 @@ use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 
 class UserPhysicalDataController extends Controller
 {
-    public function storeData(Request $request){
+    public function storeData(Request $request)
+    {
 
         //Validar los datos Y decir que campos son obligatorios
         $request->validate([
@@ -21,14 +23,14 @@ class UserPhysicalDataController extends Controller
             'weight' => 'required|string',
             'activityLevel' => 'required|string',
             'goal' => 'required|string',
-        ]);        
+        ]);
 
         // Verificar si el usuario está autenticado
         $userId = Auth::id();
         if (!$userId) {
             return response()->json(['mensaje' => 'Usuario no autenticado'], 401);
         }
-        
+
         //Esto es equivalente a un insert en la base de datos:
         ModelsUserPhysicalData::create([
             'user_id' => $userId, // Agregar el ID del usuario autenticado
@@ -39,67 +41,91 @@ class UserPhysicalDataController extends Controller
             'questions_answered' => true,
         ]);
 
-        
+
         // calcular la edad segun el año.
-        $fechaNacimiento = new DateTime($request->birthYear);// Suponiendo que es '1995-06-15' (formato YYYY-MM-DD)
+        $fechaNacimiento = new DateTime($request->birthYear); // Suponiendo que es '1995-06-15' (formato YYYY-MM-DD)
         $hoy = new DateTime(); // Fecha actual
-        $edad = $hoy->diff($fechaNacimiento)->y; // Calcula la diferencia en años
+        $edadString = $hoy->diff($fechaNacimiento)->y; // Calcula la diferencia en años
+
+        $edad = intval($edadString);
+        $weight = floatval($request->weight);
+        $height = floatval($request->height);
+        // Conversión de altura a metros para IMC
+        $heightInMeters = $height / 100;
+
+        $activiti_level = $request->activityLevel;
+        $main_goal = $request->activityLevel;
+        $approach = $request->approach;
+
 
         if (strcmp($request->gender, 'male') == 0) {
             // Calculo de la TMB con Harris-Benedict
-            $tmbMaleHarris = (10 * floatval($request->weight)) + (6.25 * floatval($request->height)) - (5 * intval($edad)) + 5;
-        
-            // Conversión de altura a metros para IMC
-            $heightInMeters = floatval($request->height) / 100;
-        
+            $tmbMaleHarris = (10 * $weight) + (6.25 * $height) - (5 * $edad) + 5;
             // Cálculo del IMC
-            $imc = floatval($request->weight) / ($heightInMeters * $heightInMeters);
-        
+            $imc = (float) number_format($weight / ($heightInMeters * $heightInMeters), 2);
             // Cálculo del porcentaje de grasa corporal
-            $corporalFat = (1.2 * $imc) + (0.23 * intval($edad)) - (10.8 * 1) - 5.4;
-        
+            $corporalFat = (float) number_format((1.20 * $imc) + (0.23 * $edad) - (10.8 * 1) - 5.4, 2);
             // Cálculo de la Masa Magra (peso sin grasa)
-            $leanMass = floatval($request->weight) * (1 - ($corporalFat / 100));
-        
-            // Cálculo de la TMB con Katch-McArdle (usando masa magra)
-            $tmbMaleKatch = 370 + (21.6 * $leanMass);
-        
-            // Promedio de ambas TMB
-            $tmbAvg = ($tmbMaleHarris + $tmbMaleKatch) / 2;
-        
-        } elseif(strcmp($request->gender, 'female') == 0) {
-            // Calculo de la TMB con Harris-Benedict
-            $tmbMaleHarris = (10 * floatval($request->weight)) + (6.25 * floatval($request->height)) - (5 * intval($edad)) - 161;
-            // Conversión de altura a metros para IMC
-            $heightInMeters = floatval($request->height) / 100;
-            // Cálculo del IMC
-            $imc = floatval($request->weight) / ($heightInMeters * $heightInMeters);
-            // Cálculo del porcentaje de grasa corporal
-            $corporalFat = (1.2 * $imc) + (0.23 * intval($edad)) - (10.8 * 2) - 5.4;
-            // Cálculo de la Masa Magra (peso sin grasa)
-            $leanMass = floatval($request->weight) * (1 - ($corporalFat / 100));
+            $leanMass = (float) number_format($weight * (1 - ($corporalFat / 100)), 2);
             // Cálculo de la TMB con Katch-McArdle (usando masa magra)
             $tmbMaleKatch = 370 + (21.6 * $leanMass);
             // Promedio de ambas TMB
-            $tmbAvg = ($tmbMaleHarris + $tmbMaleKatch) / 2;
+            $tmbAvg = intval(($tmbMaleHarris + $tmbMaleKatch) / 2);
 
-            // Logs para verificar valores
-            Log::info('tmbHarris: ', ['value' => $tmbMaleHarris]);
-            Log::info('IMC: ', ['value' => $imc]);
-            Log::info('Porcentaje de grasa corporal: ', ['value' => $corporalFat]);
-            Log::info('Masa magra: ', ['value' => $leanMass]);
-            Log::info('tmbKatch: ', ['value' => $tmbMaleKatch]);
-            Log::info('Promedio TMB: ', ['value' => $tmbAvg]);
-        } else{
+            switch ($activiti_level) {
+                case "Sedentary":
+                    $caloriesActLvl = $tmbAvg * 1.2;
+                    break;
+                case "Lightly active":
+                    $caloriesActLvl = $tmbAvg * 1.375;
+                    break;
+                case "Moderately active":
+                    $caloriesActLvl = $tmbAvg * 1.55;
+                    break;
+                case "Very active":
+                    $caloriesActLvl = $tmbAvg * 1.725;
+                    break;
+                case "Extremely active":
+                    $caloriesActLvl = $tmbAvg * 1.9;
+                    break;
+            }
+
+            //Buscar la manera de transferir datos desde aqui a la vista:
+            switch ($main_goal) {
+                case 'Lose weight':
+                    if ($approach == 'Aggressive'){
+                        $finalCalories = $caloriesActLvl * 0.75;
+                    }else{
+                        $finalCalories = $caloriesActLvl * 0.85;
+                    }
+                    break;
+                case 'Maintain my current weight':
+                    //return $caloriesActLvl
+                    break;
+                case 'Gain weight':
+                    if ($approach == 'Aggressive'){
+                        $finalCalories = $caloriesActLvl * 1.25;
+                    }else{
+                        $finalCalories = $caloriesActLvl * 1.15;
+                    }
+                    break;
+            }
+        } elseif (strcmp($request->gender, 'female') == 0) {
+            // Calculo de la TMB con Harris-Benedict
+            $tmbFemaleHarris = (10 * $weight) + (6.25 * $height) - (5 * $edad) - 161;
+            // Cálculo del IMC
+            $imc = (float) number_format($weight / ($heightInMeters * $heightInMeters), 2);
+            // Cálculo del porcentaje de grasa corporal
+            $corporalFat = (float) number_format((1.20 * $imc) + (0.23 * $edad) - (10.8 * 2) - 5.4, 2);
+            // Cálculo de la Masa Magra (peso sin grasa)
+            $leanMass = (float) number_format($weight * (1 - ($corporalFat / 100)), 2);
+            // Cálculo de la TMB con Katch-McArdle (usando masa magra)
+            $tmbMaleKatch = 370 + (21.6 * $leanMass);
+            // Promedio de ambas TMB
+            $tmbAvg = intval(($tmbFemaleHarris + $tmbMaleKatch) / 2);
+        } else {
             Log::info('Esto es el else nen');
         }
-        
-        
-        // elseif (strcmp($request->gender, 'Famale') == 0) {
-        //     $mbFamale = (10 * intval($request->weight)) + (6.25 * intval($request->height)) - (5 * intval($edad)) - 161;
-        // }
-
-
 
         // Imprimir el año en los logs del servidor, esto es como un console.log(). pero tiene que ir a laravel.log.
         // Log::info('Año de nacimientosdfsf:', ['birthYear' => $request->birthYear]);

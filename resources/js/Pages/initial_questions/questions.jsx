@@ -27,7 +27,8 @@ function Survey() {
         height: "",
         weight: "",
         activityLevel: "",
-        goal: ""
+        goal: "",
+        approach: ""
     });
 
     // Handle the change of an answer
@@ -36,17 +37,50 @@ function Survey() {
         setAnswers({ ...answers, [field]: value });
     };
 
+    // Validate if all required fields are filled
+    const validateScreen = () => {
+        switch (currentScreen) {
+            case 1:
+                return answers.birthYear && answers.gender && answers.height && answers.weight;
+            case 2:
+                return answers.activityLevel;
+            case 3:
+                return answers.goal;
+            case 4:
+                return answers.approach;
+            default:
+                return true;
+        }
+    };
+
     // Move to the next screen
     const nextScreen = () => {
-        setCurrentScreen(currentScreen + 1);
+        if (!validateScreen()) {
+            alert("Please answer all the questions before proceeding.");
+            return;
+        }
+
+        if (currentScreen === 3 && answers.goal) {
+            if (answers.goal === "Maintain my current weight") {
+                finishSurvey(); // Send data to backend
+                setCurrentScreen(5); // Go directly to the last screen if the goal is to maintain weight
+            } else {
+                setCurrentScreen(4); // Go to the new screen if goal is selected
+            }
+        } else {
+            setCurrentScreen(currentScreen + 1);
+        }
     };
 
     // Move to the previous screen (optional)
     const previousScreen = () => {
-        setCurrentScreen(currentScreen - 1);
+        if (currentScreen === 5 && answers.goal === "Maintain my current weight") {
+            setCurrentScreen(3); // Go back to the goal selection screen if the goal is to maintain weight
+        } else {
+            setCurrentScreen(currentScreen - 1);
+        }
         console.log(currentScreen);
     };
-
 
     const finishSurvey = () => {
         axios.post('http://nutriday.local/guardar-datos', answers)
@@ -65,7 +99,6 @@ function Survey() {
         alert("Survey completed! Wait a second, we are processing your data.");
     };
 
-    
     const routeToDashboard = () => {
         //redireccion a dashboard
         window.location.href = '/dashboard';
@@ -76,7 +109,7 @@ function Survey() {
         { name: "Lightly active", description: "(Light exercise 1-3 days/week)" },
         { name: "Moderately active", description: "(Moderate exercise 3-5 days/week)" },
         { name: "Very active", description: "(Hard exercise 6-7 days/week)" },
-        { name: "Extremely active", description: "(Very intense exercise or physical job)" }
+        { name: "Extremely active", description: "(Twice a day, very intense training sessions.)" }
     ];
 
     const [startDate, setStartDate] = useState(null);
@@ -209,12 +242,40 @@ function Survey() {
                     <QuestionButtons
                         nextScreen={nextScreen}
                         previousScreen={previousScreen}
-                        sendData={(finishSurvey)}
                     />
                 </div>
             )}
 
             {currentScreen === 4 && (
+                <div className="shadow-extra-dark w-[500px] h-[650px] rounded-2xl py-5 pt-10 px-6 flex flex-col items-center justify-between">
+                    <div className="w-full text-center">
+                        <h2 className="text-[2em] font-bold mb-2">Choose Your Approach</h2>
+                        <p className="mb-10">Do you want to achieve your goal aggressively or moderately?</p>
+                        <div className="flex flex-col gap-2">
+                            {["Aggressive", "Moderate"].map((approach) => (
+                                <button
+                                    key={approach}
+                                    className={`px-4 py-6 rounded w-full font-bold text-left ${answers.approach === approach
+                                        ? "bg-[#C1C86D] text-[#1F1F1F]"
+                                        : "bg-[#1F1F1F] text-white"
+                                        }`}
+                                    onClick={() => handleChange("approach", approach)}
+                                >
+                                    {approach}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <QuestionButtons
+                        nextScreen={nextScreen}
+                        previousScreen={previousScreen}
+                        sendData={finishSurvey}
+                    />
+                </div>
+            )}
+
+            {currentScreen === 5 && (
                 <div className="shadow-extra-dark w-[500px] h-[650px] rounded-2xl py-5 pt-10 px-6 flex flex-col items-center justify-between">
                     <h2 className="text-[2em] font-bold">We’re ready to start!</h2>
                     {/* contenedor principal */}
