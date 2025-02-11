@@ -5,13 +5,9 @@ import QuestionButtons from "./questionsButtons";
 import "@css/questions.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// esto no funciona
-import { usePage } from "@inertiajs/react";
 
 function Survey() {
 
-    // esto no funciona
-    const {finalCalories} = usePage().props;
 
     //Añadir estilos al body de la pagina
     useEffect(() => {
@@ -87,10 +83,13 @@ function Survey() {
         console.log(currentScreen);
     };
 
+    const [calories, setCalories] = useState(null);
+
     const finishSurvey = () => {
         axios.post('http://nutriday.local/guardar-datos', answers)
             .then(function (response) {
                 console.log("Server response:", response.data);
+                setCalories(response.data.finalCalories);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -99,7 +98,6 @@ function Survey() {
                     console.error("Error sending data:", error.message);
                 }
             });
-            
         console.log("Final answers:", answers);
         alert("Survey completed! Wait a second, we are processing your data.");
     };
@@ -286,13 +284,11 @@ function Survey() {
                     {/* contenedor principal */}
                     <div className="flex flex-col">
                         {/* fila */}
-                        <div className="flex flex-row gap-10 bg-slate-600 items-center">
+                        <div className="flex flex-row gap-10 items-center">
                         <img src="./assets/images/icons/apple-icon.png" alt="apple-icon"  />
                             <div className="flex flex-col">
                                 <p>Calorias calculadas:</p>
-                                <p className="text-[2em] font-bold">
-                                    {/* esto no funciona */}
-                                    {finalCalories} kjh<span className="text-base font-normal">kcal</span>
+                                <p className="text-[2em] font-bold"> {calories}<span className="text-base font-normal">kcal</span>
                                 </p>
                             </div>
                         </div>

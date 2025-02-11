@@ -26,8 +26,8 @@ Route::get('/initial-questions', function () {
     return Inertia::render('initial_questions/questions');
 })->middleware(['auth', 'verified'])->name('questions');
 
-//Aqui se recuperan los datos fisicos despues de contestar las preguntas iniciales.
-// Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
+//Aqui se recuperan los datos fisicos despues de contestar las preguntas iniciales y se envian al controller.
+Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
 //Route::post('/guardar-datos', [UserPhysicalDataController::class, 'prueba']);
 
 //Dashboard inicial

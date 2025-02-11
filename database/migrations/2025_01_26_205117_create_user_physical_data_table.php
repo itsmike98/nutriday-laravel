@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('weight');
             $table->enum('activity_level', ['Sedentary', 'Lightly active', 'Moderately active', 'Very active', 'Extremely active']);
             $table->enum('main_goal', ['Lose weight', 'Maintain my current weight', 'Gain weight']);
+            $table->enum('approach', ['Aggressive', 'Moderate'])->nullable();
             $table->boolean('questions_answered')->default(false);
             $table->timestamps();
         });
