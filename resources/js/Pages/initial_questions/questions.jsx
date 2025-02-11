@@ -5,8 +5,13 @@ import QuestionButtons from "./questionsButtons";
 import "@css/questions.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+// esto no funciona
+import { usePage } from "@inertiajs/react";
 
 function Survey() {
+
+    // esto no funciona
+    const {finalCalories} = usePage().props;
 
     //Añadir estilos al body de la pagina
     useEffect(() => {
@@ -286,13 +291,12 @@ function Survey() {
                             <div className="flex flex-col">
                                 <p>Calorias calculadas:</p>
                                 <p className="text-[2em] font-bold">
-                                    2344 <span className="text-base font-normal">kcal</span>
+                                    {/* esto no funciona */}
+                                    {finalCalories} kjh<span className="text-base font-normal">kcal</span>
                                 </p>
                             </div>
                         </div>
-
                     </div>
-
                     {/* arreglar boton para que finalice el cuestionario */}
                     <QuestionButtons
                         previousScreen={previousScreen}

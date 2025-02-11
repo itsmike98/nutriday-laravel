@@ -1,7 +1,9 @@
 <?php
 
+//controllers
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserPhysicalDataController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -25,7 +27,7 @@ Route::get('/initial-questions', function () {
 })->middleware(['auth', 'verified'])->name('questions');
 
 //Aqui se recuperan los datos fisicos despues de contestar las preguntas iniciales.
-Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
+// Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
 //Route::post('/guardar-datos', [UserPhysicalDataController::class, 'prueba']);
 
 //Dashboard inicial

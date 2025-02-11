@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class UserPhysicalDataController extends Controller
 {
@@ -93,20 +94,34 @@ class UserPhysicalDataController extends Controller
             //Buscar la manera de transferir datos desde aqui a la vista:
             switch ($main_goal) {
                 case 'Lose weight':
-                    if ($approach == 'Aggressive'){
+                    if ($approach == 'Aggressive') {
                         $finalCalories = $caloriesActLvl * 0.75;
-                    }else{
+                        return Inertia::render('initial_questions/questions', [
+                            'finalCalories' => $finalCalories
+                        ]);
+                    } else {
                         $finalCalories = $caloriesActLvl * 0.85;
+                        return Inertia::render('initial_questions/questions', [
+                            'finalCalories' => $finalCalories
+                        ]);
                     }
                     break;
                 case 'Maintain my current weight':
-                    //return $caloriesActLvl
+                    return Inertia::render('initial_questions/questions', [
+                        'finalCalories' => $caloriesActLvl
+                    ]);
                     break;
                 case 'Gain weight':
-                    if ($approach == 'Aggressive'){
+                    if ($approach == 'Aggressive') {
                         $finalCalories = $caloriesActLvl * 1.25;
-                    }else{
+                        return Inertia::render('initial_questions/questions', [
+                            'finalCalories' => $finalCalories
+                        ]);
+                    } else {
                         $finalCalories = $caloriesActLvl * 1.15;
+                        return Inertia::render('initial_questions/questions', [
+                            'finalCalories' => $finalCalories
+                        ]);
                     }
                     break;
             }
