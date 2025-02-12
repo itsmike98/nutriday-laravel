@@ -7,8 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Survey() {
-
-
+    
     //Añadir estilos al body de la pagina
     useEffect(() => {
         document.body.style.backgroundColor = "#2F2F2F";
@@ -86,6 +85,7 @@ function Survey() {
     const [calories, setCalories] = useState(null);
 
     const finishSurvey = () => {
+        console.log('these are the anwers:', answers);
         axios.post('http://nutriday.local/guardar-datos', answers)
             .then(function (response) {
                 console.log("Server response:", response.data);
@@ -98,7 +98,6 @@ function Survey() {
                     console.error("Error sending data:", error.message);
                 }
             });
-        console.log("Final answers:", answers);
         alert("Survey completed! Wait a second, we are processing your data.");
     };
 
@@ -255,18 +254,18 @@ function Survey() {
                         <h2 className="text-[2em] font-bold mb-2">Choose Your Approach</h2>
                         <p className="mb-10">Do you want to achieve your goal aggressively or moderately?</p>
                         <div className="flex flex-col gap-2">
-                            {["Aggressive", "Moderate"].map((approach) => (
-                                <button
-                                    key={approach}
-                                    className={`px-4 py-6 rounded w-full font-bold text-left ${answers.approach === approach
-                                        ? "bg-[#C1C86D] text-[#1F1F1F]"
-                                        : "bg-[#1F1F1F] text-white"
-                                        }`}
-                                    onClick={() => handleChange("approach", approach)}
-                                >
-                                    {approach}
-                                </button>
-                            ))}
+                        {["Aggressive", "Moderate"].map((approach) => (
+                            <button
+                                key={approach}
+                                className={`px-4 py-6 rounded w-full font-bold text-left ${answers.approach === approach
+                                    ? "bg-[#C1C86D] text-[#1F1F1F]"
+                                    : "bg-[#1F1F1F] text-white"
+                                    }`}
+                                onClick={() => handleChange("approach", approach)}
+                            >
+                                {approach}
+                            </button>
+                        ))}
                         </div>
                     </div>
 
@@ -280,25 +279,47 @@ function Survey() {
 
             {currentScreen === 5 && (
                 <div className="shadow-extra-dark w-[500px] h-[650px] rounded-2xl py-5 pt-10 px-6 flex flex-col items-center justify-between">
-                    <h2 className="text-[2em] font-bold">We’re ready to start!</h2>
-                    {/* contenedor principal */}
-                    <div className="flex flex-col">
-                        {/* fila */}
-                        <div className="flex flex-row gap-10 items-center">
-                        <img src="./assets/images/icons/apple-icon.png" alt="apple-icon"  />
-                            <div className="flex flex-col">
-                                <p>Calorias calculadas:</p>
-                                <p className="text-[2em] font-bold"> {calories}<span className="text-base font-normal">kcal</span>
-                                </p>
-                            </div>
+                <h2 className="text-[2em] font-bold text-center">Your Personalized Nutrition</h2>
+            
+                {/* Contenedor principal */}
+                <div className="w-full flex flex-col items-center gap-6">
+                    {/* Sección de calorías */}
+                    <div className="flex flex-row items-center gap-4 bg-[#222] px-5 py-3 rounded-lg shadow-md w-full">
+                        <img src="./assets/images/icons/apple-icon.png" alt="apple-icon" className="w-12 h-12" />
+                        <div className="flex flex-col">
+                            <p className="text-white text-sm font-bold">Daily Caloric Intake</p>
+                            <p className="text-[2em] font-bold">
+                                {calories ? calories.finalCalories : "Calculating..."} 
+                                <span className="text-base font-normal"> kcal</span>
+                            </p>
                         </div>
                     </div>
-                    {/* arreglar boton para que finalice el cuestionario */}
-                    <QuestionButtons
-                        previousScreen={previousScreen}
-                        routeToDashboard={routeToDashboard}
-                    />
+            
+                    {/* Información adicional */}
+                    {calories && (
+                        <div className="w-full flex flex-col gap-4 bg-[#222] p-5 rounded-lg shadow-md">
+                            <h3 className="text-lg font-semibold text-center text-white">Your Body Metrics</h3>
+                            <div className="flex justify-between items-center">
+                                <p className="text-white font-bold">💪 Body Fat %:</p>
+                                <p className="font-bold">{calories.fatPercentage}%</p>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <p className="text-white font-bold">📏 BMI:</p>
+                                <p className="font-bold">{calories.imc}</p>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <p className="text-white font-bold">🔥 Basal Metabolic Rate (TMB):</p>
+                                <p className="font-bold">{calories.tmb} kcal</p>
+                            </div>
+                        </div>
+                    )}
                 </div>
+            
+                {/* Botón para finalizar el cuestionario */}
+                <QuestionButtons previousScreen={previousScreen} routeToDashboard={routeToDashboard} />
+            </div>
+            
+            
             )}
         </div>
     );

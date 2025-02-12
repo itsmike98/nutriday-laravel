@@ -20,7 +20,12 @@ class UserPhysicalData extends Model
         'weight',
         'activity_level',
         'main_goal',
-        'questions_answered'
+        'questions_answered',
+        'approach',
+        'daily_caloric_intake',
+        'body_fat',
+        'bmi',
+        'tmb'
     ];
 
     

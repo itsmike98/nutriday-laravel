@@ -16,6 +16,7 @@ class UserPhysicalDataController extends Controller
     {
         // Validar datos
         $validatedData = $this->validateRequest($request);
+        Log::info("Datos validados: ", $validatedData);
 
         // Obtener usuario autenticado
         $userId = Auth::id();
@@ -23,11 +24,20 @@ class UserPhysicalDataController extends Controller
             return response()->json(['mensaje' => 'Usuario no autenticado'], 401);
         }
 
+        Log::info("Usuario autenticado con ID: $userId");
+
+        $calculatedData = $this->calculateAndRespond($validatedData, $userId);
+        Log::info("Datos calculados: ", $calculatedData);
+
         // Guardar datos físicos del usuario
-        $this->saveUserPhysicalData($userId, $validatedData);
+        $this->saveUserPhysicalData($userId, $validatedData, $calculatedData);
+        Log::info("Datos guardados en la base de datos correctamente.");
 
         // Calcular calorías y devolver la vista con los datos
-        return $this->calculateAndRespond($validatedData, $userId);
+        return response()->json([
+            'success' => true,
+            'finalCalories' => $calculatedData,
+        ]);
     }
 
     private function validateRequest(Request $request)
@@ -43,7 +53,7 @@ class UserPhysicalDataController extends Controller
         ]);
     }
 
-    private function saveUserPhysicalData($userId, $data)
+    private function saveUserPhysicalData($userId, $data, $calculatedData)
     {
         UserPhysicalData::create([
             'user_id' => $userId,
@@ -53,6 +63,10 @@ class UserPhysicalDataController extends Controller
             'main_goal' => $data['goal'],
             'approach' => $data['approach'],
             'questions_answered' => true,
+            'daily_caloric_intake' => $calculatedData['finalCalories'],
+            'body_fat' => $calculatedData['fatPercentage'],
+            'bmi' => $calculatedData['imc'],
+            'tmb' => $calculatedData['tmb'],
         ]);
 
         // Guardar birthYear y gender en la tabla User
@@ -65,7 +79,7 @@ class UserPhysicalDataController extends Controller
         }
     }
 
-    private function calculateAndRespond($data, $userId)
+    private function calculateAndRespond($data)
     {
         $edad = $this->calculateAge($data['birthYear']);
         $weight = floatval($data['weight']);
@@ -75,17 +89,12 @@ class UserPhysicalDataController extends Controller
         $caloriesActLvl = $this->applyActivityLevel($tmbData['tmb'], $data['activityLevel']);
         $finalCalories = $this->applyGoalAndApproach($caloriesActLvl, $data['goal'], $data['approach']);
 
-        $finalData = [
-            'fatPercentage' => $tmbData['fatPercentage'],
-            'imc' => $tmbData['imc'],
-            'tmb' => $tmbData['tmb'],
+        return [
+            'fatPercentage' => round($tmbData['fatPercentage'], 1),
+            'imc' => round($tmbData['imc'], 1),
+            'tmb' => round($tmbData['tmb']),
             'finalCalories' => round($finalCalories),
         ];
-
-        return response()->json([
-            'success' => true,
-            'finalCalories' => $finalData
-        ]);
     }
 
     private function calculateAge($birthYear)

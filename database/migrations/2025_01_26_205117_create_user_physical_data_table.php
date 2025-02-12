@@ -20,6 +20,10 @@ return new class extends Migration
             $table->enum('main_goal', ['Lose weight', 'Maintain my current weight', 'Gain weight']);
             $table->enum('approach', ['Aggressive', 'Moderate'])->nullable();
             $table->boolean('questions_answered')->default(false);
+            $table->integer('daily_caloric_intake')->nullable();
+            $table->float('body_fat')->nullable();
+            $table->float('bmi')->nullable();
+            $table->integer('tmb')->nullable();
             $table->timestamps();
         });
     }
