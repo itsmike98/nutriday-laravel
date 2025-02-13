@@ -3,7 +3,6 @@
 //controllers
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserPhysicalDataController;
-
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -21,10 +20,16 @@ Route::get('/', function () {
     ]);
 });
 
+//Ruta para borrar si todo funciona bien.
+// //Ruta para las preguntas iniciales
+// Route::get('/initial-questions', function () {
+//     return Inertia::render('initial_questions/questions');
+// })->middleware(['auth', 'verified'])->name('questions');
+
 //Ruta para las preguntas iniciales
-Route::get('/initial-questions', function () {
-    return Inertia::render('initial_questions/questions');
-})->middleware(['auth', 'verified'])->name('questions');
+Route::get('/survey', function () {
+    return Inertia::render('initial_questions/survey');
+})->middleware(['auth', 'verified'])->name('survey');
 
 //Aqui se recuperan los datos fisicos despues de contestar las preguntas iniciales y se envian al controller.
 Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
@@ -38,7 +43,7 @@ Route::get('/dashboard', function () {
 
         // Verificar si physicalData es null o si questions_answered es 0
         if (is_null($physicalData) || $physicalData->questions_answered == 0) {
-            return redirect()->route('questions');
+            return redirect()->route('survey');
         }
     }
     return Inertia::render('Dashboard');
