@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             //Esto es para que se ejecute el seed
-            //UserPhysicalDataSeeder::class, 
+            UserPhysicalDataSeeder::class, 
         ]);
     }
 }

@@ -1,12 +1,11 @@
 import React from "react";
 import QuestionButtons from '../questionsButtons';
 
-const MainGoal = ({ answers, handleChange, nextScreen, previousScreen, setCurrentScreen, finishSurvey}) => {
+const MainGoal = ({ answers, handleChange, nextScreen, previousScreen, setCurrentScreen}) => {
     const handleNext = () => {
         if (answers.goal === "Maintain my current weight") {
-            finishSurvey();
-            setCurrentScreen(5);
-        } else {
+            setCurrentScreen(6);
+        }else{
             nextScreen();
         }
     };

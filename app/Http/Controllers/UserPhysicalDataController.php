@@ -54,9 +54,11 @@ class UserPhysicalDataController extends Controller
     }
 
     private function saveUserPhysicalData($userId, $data, $calculatedData)
-    {
-        UserPhysicalData::create([
-            'user_id' => $userId,
+{
+    // Crear o actualizar registro de UserPhysicalData
+    UserPhysicalData::updateOrCreate(
+        ['user_id' => $userId], // Condición para buscar
+        [ // Datos a actualizar o crear
             'height' => $data['height'],
             'weight' => $data['weight'],
             'activity_level' => $data['activityLevel'],
@@ -67,17 +69,16 @@ class UserPhysicalDataController extends Controller
             'body_fat' => $calculatedData['fatPercentage'],
             'bmi' => $calculatedData['imc'],
             'tmb' => $calculatedData['tmb'],
-        ]);
+        ]
+    );
 
-        // Guardar birthYear y gender en la tabla User
-        $user = User::find($userId);
-        if ($user) {
-            $user->update([
-                'birth_year' => $data['birthYear'],
-                'gender' => $data['gender'],
-            ]);
-        }
-    }
+    // Actualizar birthYear y gender en la tabla User
+    User::where('id', $userId)->update([
+        'birth_year' => $data['birthYear'],
+        'gender' => $data['gender'],
+    ]);
+}
+
 
     private function calculateAndRespond($data)
     {

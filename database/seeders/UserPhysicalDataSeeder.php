@@ -20,7 +20,12 @@ class UserPhysicalDataSeeder extends Seeder
             'weight' => '75',
             'activity_level' => 'Moderately active',
             'main_goal' => 'Lose weight',
+            'approach' => 'Aggressive',
             'questions_answered' => '1',
+            'daily_caloric_intake' => '2217',
+            'body_fat' => '19.1',
+            'bmi' => '24.4',
+            'tmb' => '1683',
         ]);
     }
 }

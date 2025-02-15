@@ -2,8 +2,10 @@ import { useState } from "react";
 import WelcomeScreen from "./screens/welcomeScreen";
 import PersonalInfoScreen from "./screens/personalInfo";
 import ActivityLevel from "./screens/activityLevel";
+import AfterActivityLevel from "./screens/message-screens/afterActivityLevel";
 import MainGoal from "./screens/mainGoal";
 import Approach from "./screens/approach";
+import AfterApproach from "./screens/message-screens/afterApproach";
 import FinalScreen from "./screens/finalScreen";
 import "@css/questions.css";
 
@@ -30,8 +32,10 @@ function Survey() {
             case 2:
                 return answers.activityLevel;
             case 3:
-                return answers.goal;
+                return true;
             case 4:
+                return answers.goal;
+            case 5:
                 return answers.approach;
             default:
                 return true;
@@ -91,26 +95,40 @@ function Survey() {
             />
             )}
             {currentScreen === 3 && (
+                <AfterActivityLevel 
+                answers={answers}
+                nextScreen={nextScreen}
+                previousScreen={() => setCurrentScreen(currentScreen - 1)}
+            />
+            )}
+            {currentScreen === 4 && (
                 <MainGoal
                 answers={answers}
                 handleChange={handleChange}
                 nextScreen={nextScreen}
                 previousScreen={() => setCurrentScreen(currentScreen - 1)}
                 setCurrentScreen={setCurrentScreen}
-                finishSurvey={finishSurvey}
                 />
             )}
-            {currentScreen === 4 && (
+            {currentScreen === 5 && (
                 <Approach 
                 answers={answers}
                 handleChange={handleChange}
                 nextScreen={nextScreen}
                 previousScreen={() => setCurrentScreen(currentScreen - 1)}
-                finishSurvey={finishSurvey}
+                
                 />
             )}
-
-            {currentScreen === 5 && (
+            {currentScreen === 6 && (
+                <AfterApproach 
+                answers={answers}
+                nextScreen={nextScreen}
+                previousScreen={() => setCurrentScreen(currentScreen - 1)}
+                setCurrentScreen={setCurrentScreen}
+                finishSurvey={finishSurvey}
+            />
+            )}
+            {currentScreen === 7 && (
                 <FinalScreen 
                 calories={calories}
                 nextScreen={nextScreen}

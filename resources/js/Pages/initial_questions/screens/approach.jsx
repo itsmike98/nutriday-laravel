@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionButtons from '../questionsButtons';
 
-const Approach = ({ answers, handleChange, nextScreen, previousScreen, finishSurvey }) => {
+const Approach = ({ answers, handleChange, nextScreen, previousScreen }) => {
     return(
         <div className="shadow-extra-dark w-[500px] h-[650px] rounded-2xl py-5 pt-10 px-6 flex flex-col items-center justify-between">
         <div className="w-full text-center">
@@ -17,7 +17,7 @@ const Approach = ({ answers, handleChange, nextScreen, previousScreen, finishSur
                             }`}
                         onClick={() => handleChange("approach", approach)}
                     >
-                        {approach}
+                        {approach === "Moderate" ? "Moderate (Recommended)" : approach}
                     </button>
                 ))}
             </div>
@@ -26,7 +26,6 @@ const Approach = ({ answers, handleChange, nextScreen, previousScreen, finishSur
         <QuestionButtons
             nextScreen={nextScreen}
             previousScreen={previousScreen}
-            sendData={finishSurvey}
         />
     </div>
 )};
