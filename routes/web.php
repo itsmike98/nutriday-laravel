@@ -49,6 +49,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard'); //este middleware verifica que el usuario este autenticado
 
+Route::get('/aliment', function () {
+    return Inertia::render('Aliment/Aliment');
+})->middleware(['auth', 'verified'])->name('aliment');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

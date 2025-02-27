@@ -34,7 +34,6 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'physicalData' => $request->user() ? $request->user()->physicalData : null,
-                
             ],
         ];
     }

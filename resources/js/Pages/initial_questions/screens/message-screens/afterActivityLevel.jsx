@@ -12,7 +12,7 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>Minimal movement detected. Are you part of the furniture?</p>
                             <p>A little stretching wouldn’t hurt… probably.</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="assets/images/ilustraciones/Nutriday.png" 
                              alt="Sedentary Illustration" 
                              className="w-[22em] h-[22em] my-4" />
                     </>

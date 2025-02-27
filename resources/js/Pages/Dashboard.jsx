@@ -1,6 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
+import Navigation from './Generic_components/Navigation';
+import Calories from './Dashboard_components/Calories';
+
 export default function Dashboard() {
     const { auth } = usePage().props;
     const physicalData = auth.physicalData;
@@ -11,7 +14,7 @@ export default function Dashboard() {
         <AuthenticatedLayout
             header={
                 <>
-                    <div className='flex flex-row items-center gap-5'>
+                    <div className='flex flex-row items-center gap-5 mt-14'>
                         <img
                             src="/assets/images/willy.jpg"
                             alt="borrar"
@@ -27,16 +30,46 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
+            <div className='w-full flex flex-col items-center'>
+                <div className="pb-12 max-w-7xl w-full flex flex-col">
+                    <Navigation />
+                    {/* contenedor de calorias y water */}
+                    <div className='flex flex-row gap-5 pt-5'>
+                        {/* calories container */}
+                        <div className='bg-[#222] w-[65%] rounded-lg px-10 py-5 h-96'>
+                            <h3 className='font-semibold text-[1.3em] pb-5'>Calories</h3>
+                            <hr className='pb-5' />
+                            <Calories />
+                        </div>
+                        {/* Water container  */}
+                        <div className='bg-[#222] w-[35%] rounded-lg px-10 py-5 h-96'>
+                            <h3 className='font-semibold text-[1.3em] pb-5'>Water</h3>
+                            <hr className='pb-5' />
+                        </div>
+                    </div>
+                    {/* macronutrients container */}
+                    <div className='bg-[#222] w-full rounded-lg px-10 py-5 h-96 my-5'>
+                        <h3 className='font-semibold text-[1.3em] pb-5'>Macronutrients</h3>
+                        <hr className='pb-5' />
+                    </div>
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-[#222] shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-white">
-
+                    {/* contenedor de  */}
+                    <div className='flex flex-row gap-5 pb-5'>
+                        {/* calories container */}
+                        <div className='bg-[#222] w-[35%] rounded-lg px-10 py-5 h-96'>
+                            <h3 className='font-semibold text-[1.3em] pb-5'>Foods log</h3>
+                            <hr className='pb-5' />
+                        </div>
+                        {/* Water container  */}
+                        <div className='bg-[#222] w-[65%] rounded-lg px-10 py-5 h-96'>
+                            <h3 className='font-semibold text-[1.3em] pb-5'>Follow-up</h3>
+                            <hr className='pb-5' />
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </AuthenticatedLayout>
     );
 }

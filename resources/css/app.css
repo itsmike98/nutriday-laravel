@@ -1,81 +1,87 @@
+/* ==========================
+   🔹 TAILWIND CONFIG
+   ========================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================
+      🔹 TIPOGRAFÍA (Montserrat)
+      ========================== */
 @font-face {
     font-family: 'Montserrat';
     src: url('../../public/assets/typography/Montserrat-Light.ttf') format('truetype');
     font-weight: 200;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat';
     src: url('../../public/assets/typography/Montserrat-Regular.ttf') format('truetype');
     font-weight: 400;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat';
     src: url('../../public/assets/typography/Montserrat-SemiBold.ttf') format('truetype');
     font-weight: 600;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat';
     src: url('../../public/assets/typography/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
-    font-style: normal;
 }
 
+/* ==========================
+      🔹 ESTILOS GENERALES
+      ========================== */
 body {
     background-color: #222;
     color: #dcdcdc;
     font-family: 'Montserrat', sans-serif !important;
-    
     padding: 0;
     margin: 0;
 }
 
-h1 {
+/* ==========================
+      🔹 ENCABEZADOS
+      ========================== */
+h1,
+h2 {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 7em;
     font-weight: 600;
     line-height: 1;
 }
 
-@media (max-width: 768px) {
+h1 {
+    font-size: 7em;
+}
+
+h2 {
+    font-size: 3.5em;
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
     h1 {
         font-size: 4em;
     }
-}
 
-h2{
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 3.5em;
-    font-weight: 700;
-    line-height: 1;
-}
-
-@media (max-width: 1024px) {
     h2 {
         font-size: 2em;
     }
 }
 
-@media (max-width: 768px) {
-    h2 {
-        font-size: 2em;
-    }
-}
-
+/* ==========================
+      🔹 TEXTOS Y PÁRRAFOS
+      ========================== */
 p {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2em;
 }
 
+/* Responsive */
 @media (max-width: 1024px) {
     p {
         font-size: 1em;
@@ -86,4 +92,63 @@ p {
     p {
         font-size: 0.9em;
     }
+}
+
+/* ==========================
+      🔹 BOTONES
+      ========================== */
+.nutriday-btn-green {
+    display: inline-block;
+    color: #222;
+    font-weight: 600;
+    background-color: #C1C86D;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    max-width: 200px;
+}
+
+.nutriday-btn-light {
+    display: inline-block;
+    color: #222;
+    font-weight: 600;
+    background-color: #c4c4c4;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    max-width: 200px;
+}
+
+/* ==========================
+      🔹 POPUP (MODAL)
+      ========================== */
+.popup-content {
+    background: none !important;
+    border: none !important;
+    width: auto !important;
+}
+
+.modal {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+/* ==========================
+      🔹 INPUTS
+      ========================== */
+input{
+    background-color: #222 !important;
+    border: none !important;
+    border-radius: 7px !important;
+}
+/* quitar outline en todos los inputs */
+[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus{
+    box-shadow: none;
 }

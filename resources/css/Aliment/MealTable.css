@@ -1,0 +1,89 @@
+/* ==================================
+   🔹 ESTRUCTURA GENERAL DE LA TABLA
+   ================================== */
+   table {
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 3px;
+  }
+  
+  th, td {
+    width: 100%;
+  }
+  
+  /* ==========================
+     🔹 ESTILOS DEL ENCABEZADO
+     ========================== */
+  th {
+    background-color: #4b4b4b;
+    padding: 5px 10px;
+  }
+  
+  /* Muestra el título completo por defecto */
+  th::after {
+    content: attr(data-full);
+  }
+  
+  /* En pantallas pequeñas, muestra el título corto */
+  @media (max-width: 850px) {
+    th::after {
+      content: attr(data-short);
+    }
+  }
+  
+  /* ==========================
+     🔹 CELDAS Y ALINEACIÓN
+     ========================== */
+  td {
+    text-align: center;
+  }
+  
+  /* Primera columna (más ancha y alineada a la izquierda) */
+  .meal-title,
+  .aliment-name {
+    text-align: left !important;
+    padding-left: 30px;
+  }
+  
+  /* Celda vacía (espaciado entre filas) */
+  .empty-cells {
+    padding-bottom: 40px;
+    background-color: #2b2b2b;
+  }
+  
+  /* ==========================
+     🔹 FILAS Y TABLA
+     ========================== */
+  .meal-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  .meal-table th,
+  .meal-table td {
+    text-align: center;
+    padding: 3px 10px;
+    white-space: normal; /* Evita cortes de texto inesperados */
+  }
+  
+  /* Primera columna más ancha */
+  .meal-table .meal-title {
+    width: 400%;
+    text-align: left;
+  }
+  
+  /* Estilo de filas */
+  .alimento {
+    background-color: #4b4b4b;
+  }
+  
+  /* ==========================
+     🔹 RESPONSIVE DESIGN
+     ========================== */
+  @media (max-width: 850px) {
+    .meal-table .meal-title {
+      width: 200px;
+      text-align: left;
+    }
+  }
