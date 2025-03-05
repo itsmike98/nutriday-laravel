@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             //Esto es para que se ejecute el seed
             UserPhysicalDataSeeder::class, 
+            MealSeeder::class,
         ]);
     }
 }

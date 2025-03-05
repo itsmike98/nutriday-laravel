@@ -1,11 +1,16 @@
+import React from "react";
 import { useState } from "react";
 import Layout from "../Layouts/Layout";
 import MealTable from "./MealTable";
 import Popup from "reactjs-popup";
 
 function Aliment() {
+    // estado para controlar los meals
     const [meal, setMeal] = useState([]);
+    // estado para controlar el input del nombre del meal
     const [inputValue, setInputValue] = useState('');
+    // estado para controlar la fecha
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const handleMeal = (close) => {
         setMeal([...meal, <MealTable mealTitle={inputValue} key={meal.length} />]);
@@ -13,12 +18,45 @@ function Aliment() {
         close();
     };
 
+    // Función para cambiar la fecha
+    function changeDate(days) {
+        setSelectedDate((prevDate) => {
+            const newDate = new Date(prevDate);
+            newDate.setDate(newDate.getDate() + days);
+
+            const actualDate = new Date();
+
+            if(actualDate < newDate){
+                return prevDate;
+            }else{
+                return newDate;
+            }
+        });
+    };
+
+    const meals = ['meal1', 'meal2', 'meal3', 'meal4', 'meal5', 'meal6', 'meal7', 'meal8', 'meal9', 'meal10'];
     
+    //hay una libreria que te puede hacer el formateo de las fechas, se llama date-fns.
+    //Ahora tengo que formatear la fecha para que sea igual a la de la api.
+    //peticion para recojer los datos de la taba meals.
+    React.useEffect(() => {
+        axios.get("/user-meals/{selectedDate}").then((response) => {
+          console.log(response.data);
+        });
+      }, []);
 
     return (
         <>
             <div className="bg-[#222] rounded-lg p-10 my-5">
-                <h3 className='font-semibold text-[1.3em] pb-5'>Food log</h3>
+                <div className="flex justify-between items-center pb-5">
+                    <h3 className='font-semibold text-[1.3em]'>Food log</h3>
+                    <div className="flex items-center gap-2">
+                        <button onClick={() => changeDate(-1)} className="material-icons">chevron_left</button>
+                        <span className="font-bold">{selectedDate.toLocaleDateString()}</span>
+                        <button onClick={() => changeDate(1)} className="material-icons">chevron_right</button>
+                    </div>
+
+                </div>
                 <hr className='pb-5' />
 
                 {/* COLUMNS */}
@@ -37,8 +75,9 @@ function Aliment() {
                         </thead>
                     </table>
                     {/* MEALS */}
-                    <MealTable mealTitle="Breakfast" />
-                    {meal}
+                    {meals.map((meal, index) => (
+                        <MealTable key={index} mealTitle={meal} />
+                    ))}
                 </div>
 
                 <Popup

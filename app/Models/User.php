@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserPhysicalData::class);
     }
+
+    /**
+     * Get the user's meals.
+     */
+    public function meals()
+    {
+        return $this->hasMany(Meal::class);
+    }
 }
