@@ -11,39 +11,61 @@ function Aliment() {
     const [inputValue, setInputValue] = useState('');
     // estado para controlar la fecha
     const [selectedDate, setSelectedDate] = useState(new Date());
+    // estado para controlar los meals de la db
+    const [dbMeals, setDbMeals] = useState([]);
 
+    // Funcion para limitar los dias a -5
+    function changeDate(button) {
+        if (!button) {
+            setSelectedDate(prevDate => {
+                const today = new Date();
+                const minDate = new Date(today);
+                minDate.setDate(today.getDate() - 5); // Limitar a 5 días atrás
+                const newDate = new Date(prevDate);
+                if (newDate > minDate) { // Solo restar si aún no se ha llegado al límite
+                    newDate.setDate(newDate.getDate() - 1);
+                }
+                return newDate; // Siempre devolver la fecha
+            });
+        } else {
+            setSelectedDate(prevDate => {
+                const today = new Date();
+                const currentDate = new Date(prevDate);
+                const nextDate = new Date(currentDate);
+                nextDate.setDate(currentDate.getDate() + 1);
+                if (nextDate <= today) {
+                    return nextDate;
+                } else {
+                    return currentDate;
+                }
+            });
+        }
+    }
+
+    
     const handleMeal = (close) => {
         setMeal([...meal, <MealTable mealTitle={inputValue} key={meal.length} />]);
         setInputValue(''); // Limpiar el input después de agregar la comida
         close();
     };
 
-    // Función para cambiar la fecha
-    function changeDate(days) {
-        setSelectedDate((prevDate) => {
-            const newDate = new Date(prevDate);
-            newDate.setDate(newDate.getDate() + days);
+    function formatDate(date){
+        const splitedDate = date.split("/");
+        const year = splitedDate[2];
+        const month = splitedDate[1];
+        const day = splitedDate[0];
+        console.log(year, month, day);
+        return `${year}-${month}-${day}`;
+    }
 
-            const actualDate = new Date();
-
-            if(actualDate < newDate){
-                return prevDate;
-            }else{
-                return newDate;
-            }
-        });
-    };
-
-    const meals = ['meal1', 'meal2', 'meal3', 'meal4', 'meal5', 'meal6', 'meal7', 'meal8', 'meal9', 'meal10'];
-    
-    //hay una libreria que te puede hacer el formateo de las fechas, se llama date-fns.
-    //Ahora tengo que formatear la fecha para que sea igual a la de la api.
-    //peticion para recojer los datos de la taba meals.
+    //peticion para recojer los datos de la taba meals por dia.
     React.useEffect(() => {
-        axios.get("/user-meals/{selectedDate}").then((response) => {
-          console.log(response.data);
+        //formato valido para la fecha: 2025-03-05
+        axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
+            setDbMeals(response.data);
+            console.log("hola", response.data);
         });
-      }, []);
+    }, [selectedDate]);
 
     return (
         <>
@@ -51,9 +73,11 @@ function Aliment() {
                 <div className="flex justify-between items-center pb-5">
                     <h3 className='font-semibold text-[1.3em]'>Food log</h3>
                     <div className="flex items-center gap-2">
-                        <button onClick={() => changeDate(-1)} className="material-icons">chevron_left</button>
-                        <span className="font-bold">{selectedDate.toLocaleDateString()}</span>
-                        <button onClick={() => changeDate(1)} className="material-icons">chevron_right</button>
+                        <button onClick={() => changeDate(false)} className="material-icons">chevron_left</button>
+                        <span className="font-bold text-center min-w-[80px] max-w-[80px]">
+                            {selectedDate.toLocaleDateString('en-GB')}
+                        </span>
+                        <button onClick={() => changeDate(true)} className="material-icons">chevron_right</button>
                     </div>
 
                 </div>
@@ -75,8 +99,8 @@ function Aliment() {
                         </thead>
                     </table>
                     {/* MEALS */}
-                    {meals.map((meal, index) => (
-                        <MealTable key={index} mealTitle={meal} />
+                    {dbMeals.map((meal, index) => (
+                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} />
                     ))}
                 </div>
 
