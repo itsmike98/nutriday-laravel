@@ -73,11 +73,11 @@ function Aliment() {
                 <div className="flex justify-between items-center pb-5">
                     <h3 className='font-semibold text-[1.3em]'>Food log</h3>
                     <div className="flex items-center gap-2">
-                        <button onClick={() => changeDate(false)} className="material-icons">chevron_left</button>
-                        <span className="font-bold text-center min-w-[80px] max-w-[80px]">
+                        <button onClick={() => changeDate(false)} className="material-icons border-2 rounded-full">chevron_left</button>
+                        <span className="font-bold text-center min-w-[80px] max-w-[80px] mr-3">
                             {selectedDate.toLocaleDateString('en-GB')}
                         </span>
-                        <button onClick={() => changeDate(true)} className="material-icons">chevron_right</button>
+                        <button onClick={() => changeDate(true)} className="material-icons border-2 rounded-full">chevron_right</button>
                     </div>
 
                 </div>

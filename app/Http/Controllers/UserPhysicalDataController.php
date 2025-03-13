@@ -16,7 +16,6 @@ class UserPhysicalDataController extends Controller
     {
         // Validar datos
         $validatedData = $this->validateRequest($request);
-        Log::info("Datos validados: ", $validatedData);
 
         // Obtener usuario autenticado
         $userId = Auth::id();
@@ -24,14 +23,10 @@ class UserPhysicalDataController extends Controller
             return response()->json(['mensaje' => 'Usuario no autenticado'], 401);
         }
 
-        Log::info("Usuario autenticado con ID: $userId");
-
         $calculatedData = $this->calculateAndRespond($validatedData, $userId);
-        Log::info("Datos calculados: ", $calculatedData);
 
         // Guardar datos físicos del usuario
         $this->saveUserPhysicalData($userId, $validatedData, $calculatedData);
-        Log::info("Datos guardados en la base de datos correctamente.");
 
         // Calcular calorías y devolver la vista con los datos
         return response()->json([
