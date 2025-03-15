@@ -12,9 +12,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>Minimal movement detected. Are you part of the furniture?</p>
                             <p>A little stretching wouldn’t hurt… probably.</p>
                         </div>
-                        <img src="assets/images/ilustraciones/Nutriday.png" 
+                        <img src="assets/images/nutrin/Nutri_3.png" 
                              alt="Sedentary Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
             case "Lightly active":
@@ -25,9 +25,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>You move just enough to keep things interesting. Nice effort!</p>
                             <p>Maybe take the stairs next time? Just a thought.</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="/assets/images/nutrin/Nutri_1.png" 
                              alt="Lightly Active Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
             case "Moderately active":
@@ -38,9 +38,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>A good balance of movement and rest. Keep it up!</p>
                             <p>At this rate, you might just unlock “Fitness Enthusiast” mode. 🚀</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="/assets/images/nutrin/Nutri_8.png" 
                              alt="Moderately Active Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
             case "Very active":
@@ -51,9 +51,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>You're always on the move! Impressive stamina.</p>
                             <p>Just don’t forget to rest once in a while. Your legs will thank you. 🏃‍♂️</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="/assets/images/nutrin/Nutri_5.png" 
                              alt="Very Active Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
             case "Extremely active":
@@ -64,9 +64,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>You train like it’s your full-time job. Respect!</p>
                             <p>Ever heard of a rest day? It’s a thing, I promise.</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="/assets/images/nutrin/Nutri_2.png" 
                              alt="Extremely Active Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
             default:
@@ -77,9 +77,9 @@ const AfterActivityLevel = ({ answers, nextScreen, previousScreen }) => {
                             <p>Somewhere between "couch potato" and "Olympic athlete."</p>
                             <p>Mind clarifying before we make assumptions?</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png" 
+                        <img src="/assets/images/nutrin/Nutri_1.png" 
                              alt="Unknown Illustration" 
-                             className="w-[22em] h-[22em] my-4" />
+                             className="w-auto h-[22em] my-4" />
                     </>
                 );
         }

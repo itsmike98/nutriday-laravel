@@ -32,7 +32,7 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <div className='w-full flex flex-col items-center'>
                 <div className="pb-12 max-w-7xl w-full flex flex-col">
-                    <Navigation />
+                    <Navigation page="Dashboard"/>
                     {/* contenedor de calorias y water */}
                     <div className='flex flex-row gap-5 pt-5'>
                         {/* calories container */}

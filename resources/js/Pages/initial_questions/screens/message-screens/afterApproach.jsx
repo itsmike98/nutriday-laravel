@@ -31,7 +31,7 @@ const AfterApproach = ({ answers, nextScreen, setCurrentScreen, previousScreen, 
                             <p>Minimal movement detected. Are you part of the furniture?</p>
                             <p>A little stretching wouldn’t hurt… probably.</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png"
+                        <img src="/assets/images/nutrin/Nutri_6.png"
                             alt="Sedentary Illustration"
                             className="w-[22em] h-[22em] my-4" />
                     </>
@@ -44,9 +44,9 @@ const AfterApproach = ({ answers, nextScreen, setCurrentScreen, previousScreen, 
                             <p>You're doing great. Stay active and keep pushing towards your goals!</p>
                             <p>Remember, consistency is key to achieving your desired results.</p>
                         </div>
-                        <img src="./assets/images/ilustraciones/avocado-squat.png"
+                        <img src="/assets/images/nutrin/Nutri_4.png"
                             alt="Motivational Illustration"
-                            className="w-[22em] h-[22em] my-4" />
+                            className="w-auto h-[22em] my-4" />
                     </>
                 );
         }

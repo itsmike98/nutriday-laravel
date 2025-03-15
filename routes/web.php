@@ -32,6 +32,7 @@ Route::get('/survey', function () {
 
 
 //Aqui se recuperan los datos fisicos despues de contestar las preguntas iniciales y se envian al controller.
+//Cambiar nombre ruta...
 Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);
 
 

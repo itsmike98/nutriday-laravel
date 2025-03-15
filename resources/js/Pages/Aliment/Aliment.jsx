@@ -6,13 +6,15 @@ import Popup from "reactjs-popup";
 
 function Aliment() {
     // estado para controlar los meals
-    const [meal, setMeal] = useState([]);
+    //const [meal, setMeal] = useState([]);
     // estado para controlar el input del nombre del meal
     const [inputValue, setInputValue] = useState('');
     // estado para controlar la fecha
     const [selectedDate, setSelectedDate] = useState(new Date());
     // estado para controlar los meals de la db
     const [dbMeals, setDbMeals] = useState([]);
+    //estado para controlar si se introdujo un nuevo meal y actualizar en funcion de ello
+    const [newMeal, setNewMeal] = useState(false);
 
     // Funcion para limitar los dias a -5
     function changeDate(button) {
@@ -41,10 +43,20 @@ function Aliment() {
             });
         }
     }
-
     
     const handleMeal = (close) => {
-        setMeal([...meal, <MealTable mealTitle={inputValue} key={meal.length} />]);
+        //Enviar nombre del nuevo meal para guardarlo en la database.
+        axios.post('/new-meal', {
+            meal_name: inputValue
+          })
+          .then(function (response) {
+            console.log("Success response:", response);
+            setNewMeal(prevState => !prevState); // Alternar el valor de newMeal
+          })
+          .catch(function (error) {
+            console.log("Error response:", error);
+        });
+        //setMeal([...meal, <MealTable mealTitle={inputValue} key={meal.length} />]);
         setInputValue(''); // Limpiar el input después de agregar la comida
         close();
     };
@@ -58,14 +70,14 @@ function Aliment() {
         return `${year}-${month}-${day}`;
     }
 
-    //peticion para recojer los datos de la taba meals por dia.
+    //peticion para obtener los datos de la taba meals por dia.
     React.useEffect(() => {
         //formato valido para la fecha: 2025-03-05
         axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
             setDbMeals(response.data);
             console.log("hola", response.data);
         });
-    }, [selectedDate]);
+    }, [selectedDate, newMeal]);
 
     return (
         <>
@@ -79,7 +91,6 @@ function Aliment() {
                         </span>
                         <button onClick={() => changeDate(true)} className="material-icons border-2 rounded-full">chevron_right</button>
                     </div>
-
                 </div>
                 <hr className='pb-5' />
 

@@ -25,3 +25,18 @@ Route::get('/user-meals/{data}', function (Request $request, $data) {
     }
 
 })->middleware(['auth', 'verified']);
+
+
+//Falta guardar los datos en la database
+Route::post('/new-meal', function (Request $request) {
+    $request->validate([
+        'meal_name' => 'required|string|max:255'
+    ]);
+
+    $mealDB = new Meal();
+    $mealDB->user_id = $request->user()->id;
+    $mealDB->meal_name = $request->input('meal_name');
+    $mealDB->save();
+
+    print_r("Meal saved into the database correctly.");
+});
