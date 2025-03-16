@@ -10,10 +10,11 @@ class Meal extends Model
 
     protected $fillable = ['user_id', 'meal_name'];
 
-    public function aliment()
+    public function aliments()
     {
-        return $this->belongsToMany(Aliment::class, 'meal_aliment');
+        return $this->belongsToMany(Aliment::class, 'meal_aliment'); 
     }
+
 
     public function user()
     {

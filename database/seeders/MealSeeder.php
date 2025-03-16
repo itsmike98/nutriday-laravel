@@ -15,7 +15,7 @@ class MealSeeder extends Seeder
     public function run(): void
     {
         $defaultMeals = ['Breakfast', 'Lunch', 'Snack', 'Dinner'];
-        $userId = 1; // ID del usuario para el que se crean las comidas
+        $userId = 1; // ID del usuario para el que se crean los meals
 
         for ($i = 0; $i < 5; $i++) {
             $date = Carbon::now()->subDays($i)->toDateString(); // Obtiene la fecha de hoy y los 4 días anteriores

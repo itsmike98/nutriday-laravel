@@ -15,6 +15,10 @@ function Aliment() {
     const [dbMeals, setDbMeals] = useState([]);
     //estado para controlar si se introdujo un nuevo meal y actualizar en funcion de ello
     const [newMeal, setNewMeal] = useState(false);
+    //estado para controlar si se eliminó un meal y actualizar en funcion de ello
+    const [deleteMeal, setDeleteMeal] = useState(false);
+    //estado para controlar si se cambió un meal y actualizar en funcion de ello
+    const [changeMeal, setChangeMeal] = useState(false);
 
     // Funcion para limitar los dias a -5
     function changeDate(button) {
@@ -77,7 +81,37 @@ function Aliment() {
             setDbMeals(response.data);
             console.log("hola", response.data);
         });
-    }, [selectedDate, newMeal]);
+    }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
+
+    function handleDeleteMeal(mealId) {
+        axios.post('/delete-meal', {
+            meal_id: mealId
+          })
+          .then(function (response) {
+            console.log("Success response:", response);
+            setDeleteMeal(prevState => !prevState);
+          })
+          .catch(function (error) {
+            console.log("Error response:", error);
+        });
+    }
+
+    function handleChangeName(event,mealId, newMealName, closePopup){
+        event.preventDefault();
+        axios.post('/change-meal-name', {
+            meal_id: mealId,
+            meal_name: newMealName
+        })
+        .then(function (response) {
+            console.log("Success response:", response);
+            setChangeMeal(prevState => !prevState);
+          })
+          .catch(function (error) {
+            console.log("Error response:", error);
+        });
+        
+        closePopup();
+    }
 
     return (
         <>
@@ -111,7 +145,7 @@ function Aliment() {
                     </table>
                     {/* MEALS */}
                     {dbMeals.map((meal, index) => (
-                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} />
+                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} mealId={meal.id} onDelete={handleDeleteMeal} onChange={handleChangeName}/>
                     ))}
                 </div>
 
