@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 class FatSecretAuthController extends Controller
 {
-    public function getToken()
+    public function apiRequestHandler($aliment)
     {
         $clientID = '5f03e151b864498b963681b0d911dbae';
         $clientSecret = 'f00d3d52895045e99799711d754e6c61';
@@ -22,7 +22,7 @@ class FatSecretAuthController extends Controller
 
         if ($response->successful()) {
             $accessToken = $response->json()['access_token'] ?? null;
-            $query = 'apple';
+            $query = $aliment;
             $finalData = $this->fatSecretRequest($accessToken, $query);
             return $finalData;
         }
