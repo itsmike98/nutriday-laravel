@@ -12,8 +12,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-Route::get('/test', [UserPhysicalDataController::class, 'prueba']);
-
 
 // ruta para la landing page
 Route::get('/', function () {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FatSecretAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meal;
 use Illuminate\Http\Request;
@@ -70,3 +71,5 @@ Route::post('/change-meal-name', function(Request $request){
         return response()->json(['error' => 'Meal not found'], 404);
     }
 })->middleware(['auth', 'verified']);
+
+Route::get('/see-api-fat', [FatSecretAuthController::class, 'getToken'])->middleware(['auth', 'verified']);

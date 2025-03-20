@@ -74,15 +74,6 @@ function Aliment() {
         return `${year}-${month}-${day}`;
     }
 
-    //peticion para obtener los datos de la taba meals por dia.
-    React.useEffect(() => {
-        //formato valido para la fecha: 2025-03-05
-        axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
-            setDbMeals(response.data);
-            console.log("hola", response.data);
-        });
-    }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
-
     function handleDeleteMeal(mealId) {
         axios.post('/delete-meal', {
             meal_id: mealId
@@ -113,6 +104,15 @@ function Aliment() {
         closePopup();
     }
 
+    //peticion para obtener los datos de la taba meals por dia.
+    React.useEffect(() => {
+        //formato valido para la fecha: 2025-03-05
+        axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
+            setDbMeals(response.data);
+            console.log("hola", response.data);
+        });
+    }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
+
     return (
         <>
             <div className="bg-[#222] rounded-lg p-10 my-5">
@@ -134,12 +134,11 @@ function Aliment() {
                         <thead>
                             <tr className="columns">
                                 <th className="meal-title bg-transparent"></th>
+                                <th data-full="Quantiti" data-short="Qua"></th>
                                 <th data-full="Calories" data-short="Cal"></th>
                                 <th data-full="Carbs" data-short="Carb"></th>
                                 <th data-full="Fats" data-short="Fat"></th>
                                 <th data-full="Proteins" data-short="Prot"></th>
-                                <th data-full="Sodium" data-short="Sod"></th>
-                                <th data-full="Sugar" data-short="Su"></th>
                             </tr>
                         </thead>
                     </table>

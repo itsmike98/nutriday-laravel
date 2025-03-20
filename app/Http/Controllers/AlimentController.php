@@ -18,7 +18,17 @@ class AlimentController extends Controller
         // Realizar las comprobaciones en la base de datos
         $this->saveData($user, $this->getLastMeal($user));
 
+        //fatSecret token
+        // $fatSecretController = new FatSecretAuthController();
+        // $fatSecretToken = $fatSecretController->getToken(); //obtenemos el token de fatSecret
+
+        // $fatSecretRoquest = new FatSecretAuthController();
+        // $request_Fat = $fatSecretController->fatSecretRequest();
+
         // No necesitas pasar datos a la vista si no los vas a usar
+        // return Inertia::render('Aliment/Aliment', [
+        //     'fatSecretToken' => $fatSecretToken
+        // ]);
         return Inertia::render('Aliment/Aliment');
     }
 
