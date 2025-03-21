@@ -9,3 +9,6 @@ Route::get('/meals/{meal}/aliments', function (Meal $meal) {
 })->middleware(['auth', 'verified']);
 
 Route::get('/aliment/{aliment}', [FatSecretAuthController::class, 'apiRequestHandler'])->middleware(['auth', 'verified']);
+
+// Route::post('/save-aliment', [])
+Route::post('/guardar-datos', [UserPhysicalDataController::class, 'storeData']);

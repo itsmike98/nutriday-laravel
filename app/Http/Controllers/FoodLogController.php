@@ -8,31 +8,20 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class AlimentController extends Controller
+class FoodLogController extends Controller
 {
     public function index()
     {
         //obtenermos el usuario actual
         $user = Auth::user();
 
-        // Realizar las comprobaciones en la base de datos
+        // Realizar las comprobaciones en la base de datos y crea meal diario.
         $this->saveData($user, $this->getLastMeal($user));
 
-        //fatSecret token
-        // $fatSecretController = new FatSecretAuthController();
-        // $fatSecretToken = $fatSecretController->getToken(); //obtenemos el token de fatSecret
-
-        // $fatSecretRoquest = new FatSecretAuthController();
-        // $request_Fat = $fatSecretController->fatSecretRequest();
-
-        // No necesitas pasar datos a la vista si no los vas a usar
-        // return Inertia::render('Aliment/Aliment', [
-        //     'fatSecretToken' => $fatSecretToken
-        // ]);
         return Inertia::render('Aliment/Aliment');
     }
 
-    //funcion para repetir el menu del ultimo dia.
+    //funcion para repetir el meals del ultimo dia.
     private function getLastMeal($user){
         //Obtener la fecha actual, hay que formateat con ->format('Y/m/d') al usarla
         $currentDate = Carbon::now();

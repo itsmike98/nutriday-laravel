@@ -1,11 +1,13 @@
-import { useEffect } from "react";
-import React, { useState } from "react";
+import { useState } from "react";
 import AlimentItem from "./AlimentItem";
+import RotateLoader from "react-spinners/RotateLoader";
 
 export default function AddAlimentForm({ mealTitle, close }) {
     const [alimentQuery, setAlimentQuery] = useState("");
     const [alimentsList, setAlimentsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedAliment, setSelectedAliment] = useState(null);
+
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -15,7 +17,8 @@ export default function AddAlimentForm({ mealTitle, close }) {
 
         axios.get(`/aliment/${alimentQuery}`)
             .then((response) => {
-                setAlimentsList(response.data);
+                setAlimentsList(Array.isArray(response.data.foods.food) ? response.data.foods.food : [response.data.foods.food]);
+
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
@@ -24,6 +27,11 @@ export default function AddAlimentForm({ mealTitle, close }) {
                 setIsLoading(false);
             });
     }
+
+    function alimentClicked(aliment) {
+        setSelectedAliment(aliment);
+    }
+    
 
     return (
         <>
@@ -77,18 +85,36 @@ export default function AddAlimentForm({ mealTitle, close }) {
                 <div className="flex flex-row md:flex-row rounded-xl w-full flex-grow min-h-0 bg-[#1b1b1b] p-5 mt-5 overflow-x-auto">
                     {/* Columna izquierda con scroll */}
                     <div className="flex flex-col gap-5 max-h-[50vh] overflow-auto rounded-[15px] w-full md:w-1/2 p-5 bg-[#222]">
-                        
 
-                        {/* Mostrar resultados cuando no esté cargando */}
-                        {!isLoading && alimentsList.length > 0 && (
-                            <ul>
-                                {alimentsList.map((aliment, index) => (
-                                    <li key={index}>{aliment.name}</li>
+                        {/* Spinner centrado */}
+                        {isLoading ? (
+                            <div className="flex justify-center items-center h-full">
+                                <RotateLoader
+                                    color="#C1C86D"
+                                    loading={isLoading}
+                                    cssOverride={{}}
+                                    margin={5}
+                                />
+                            </div>
+                        ) : (
+                            <>
+                                {/* Mostrar los alimentos cuando no está cargando */}
+                                {alimentsList.length > 0 && alimentsList.map((aliment, index) => (
+                                    <ul key={aliment.id || index}> {/* Set key on <ul> instead of <li> */}
+                                        <li className="cursor-pointer" onClick={() => alimentClicked(aliment)}>
+                                            <AlimentItem
+                                                name={aliment.food_name}
+                                                brand={aliment.brand_name}
+                                                foodDescription={aliment.food_description}
+                                            />
+                                        </li>
+                                    </ul>
                                 ))}
-                            </ul>
+
+                            </>
                         )}
-                        {/* <AlimentItem name={"Albaricoque"} unit={"100g"} calories={"200"} /> */}
                     </div>
+
 
                     {/* Columna derecha */}
                     <div className="flex-grow rounded-[15px] p-5 flex flex-col justify-center w-full md:w-auto mx-2">
@@ -104,6 +130,18 @@ export default function AddAlimentForm({ mealTitle, close }) {
                         {/* Formulario */}
                         <form className="flex flex-col gap-4">
                             <div className="flex flex-col">
+                                {selectedAliment ? (
+                                    <>
+                                    <div className="mt-5 mb-9">
+                                    <AlimentItem
+                                                name={selectedAliment.food_name}
+                                                brand={selectedAliment.brand_name}
+                                                foodDescription={selectedAliment.food_description}
+                                            />
+                                    </div>
+                                        
+                                    </>
+                                ) : ("")}
                                 <label className="text-white mb-1">Select meal</label>
                                 <select className="bg-[#333] text-white p-2 rounded-md border border-[#444] py-2">
                                     <option>Breakfast</option>
