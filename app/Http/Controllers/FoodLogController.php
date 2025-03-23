@@ -18,7 +18,7 @@ class FoodLogController extends Controller
         // Realizar las comprobaciones en la base de datos y crea meal diario.
         $this->saveData($user, $this->getLastMeal($user));
 
-        return Inertia::render('Aliment/Aliment');
+        return Inertia::render('Food_log/FoodLog');
     }
 
     //funcion para repetir el meals del ultimo dia.

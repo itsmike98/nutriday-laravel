@@ -2,7 +2,7 @@
 
 //controllers
 
-use App\Http\Controllers\AlimentController;
+use App\Http\Controllers\FoodLogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserPhysicalDataController;
 use App\Models\Aliment;
@@ -48,7 +48,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard'); //este middleware verifica que el usuario este autenticado
 
-Route::get('/aliment', [AlimentController::class, 'index'])->middleware(['auth', 'verified'])->name('aliment');
+Route::get('/food-log', [FoodLogController::class, 'index'])->middleware(['auth', 'verified'])->name('food-log');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

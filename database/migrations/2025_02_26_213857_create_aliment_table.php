@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('aliment', function (Blueprint $table) {
             $table->id();
-            $table->string('aliment_name');
-            $table->float('aliment_serving_amount');
+            $table->integer('aliment_id');
+            $table->integer('aliment_serving_id');
+            $table->string('aliment_serving_amount');
             $table->timestamps();
         });
     }

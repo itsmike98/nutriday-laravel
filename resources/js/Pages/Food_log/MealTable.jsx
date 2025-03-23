@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import "../../../../resources/css/Aliment/MealTable.css";
 import 'reactjs-popup/dist/index.css';
 import AddAlimentForm from "./AddAlimentForm";
+import AlimentMealTable from "./AlimentMealTable";
 
 
 export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
@@ -27,6 +28,10 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
       setAliments(response.data);
     });
   }, []);
+
+  function handleDeleteAliment(alimentId) {
+    setAliments(prevAliments => prevAliments.filter(aliment => aliment.aliment_id !== alimentId));
+  }
 
   return (
 
@@ -96,15 +101,8 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
             <td className="empty-cells"></td>
           </tr>
 
-          {aliments.map((aliment) => (
-            <tr key={aliment.id} className="alimento">
-              <td className="aliment-name">{aliment.aliment_name}</td>
-              <td>{aliment.aliment_serving_amount}</td>
-              <td>3 <span>g</span></td>
-              <td>55 <span>g</span></td>
-              <td>19</td>
-              <td>2</td>
-            </tr>
+          {aliments.map((aliment, index) => (
+            <AlimentMealTable key={`${aliment.id}-${index}`} aliment={aliment} mealId={mealId} onDelete={handleDeleteAliment}/>
           ))}
         </tbody>
       </table>

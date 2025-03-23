@@ -9,7 +9,7 @@ export default function AddAlimentForm({ mealTitle, close }) {
     const [selectedAliment, setSelectedAliment] = useState(null);
 
 
-    function handleSubmit(event) {
+    function handleSearch(event) {
         event.preventDefault();
         if (alimentQuery.trim() === "") return;
 
@@ -71,7 +71,7 @@ export default function AddAlimentForm({ mealTitle, close }) {
                         <div className="flex items-end w-1/4">
                             <button
                                 type="submit"
-                                onClick={handleSubmit}
+                                onClick={handleSearch}
                                 className="w-full h-10 py-2 px-10 rounded-md bg-[#C1C86D] text-[#2F2F2F] font-bold transition-colors duration-300"
                             >
                                 Search

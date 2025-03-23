@@ -8,6 +8,13 @@ import 'material-icons/iconfont/material-icons.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+//favicon
+const favicon = document.createElement("link");
+favicon.rel = "icon";
+favicon.href = "/favicon.ico";
+document.head.appendChild(favicon);
+
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>

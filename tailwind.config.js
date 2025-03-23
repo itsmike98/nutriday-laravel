@@ -17,7 +17,10 @@ export default {
             },
             boxShadow: {
                 'extra-dark': '0px 0px 30px rgba(0, 0, 0, 0.5)',
-              },
+            },
+            colors: {
+                avocado: '#C1C86D',
+            },
         },
     },
 

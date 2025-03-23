@@ -10,13 +10,13 @@ const Navigation = ({ page }) => {
                 <button className={`bg-transparent py-4 px-4 ${isActive("Dashboard")}`} onClick={() => window.location.href = '/dashboard'}>
                     Dashboard
                 </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("Aliment")}`} onClick={() => window.location.href = '/aliment'}>
-                    Aliment
+                <button className={`bg-transparent py-4 px-4 ${isActive("Food-log")}`} onClick={() => window.location.href = '/food-log'}>
+                    FoodLog
                 </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("Informs")}`} onClick={() => window.location.href = '/informs'}>
+                <button className={`bg-transparent py-4 px-4 ${isActive("informs")}`} onClick={() => window.location.href = '/informs'}>
                     Informs
                 </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("Profile")}`} onClick={() => window.location.href = '/profile'}>
+                <button className={`bg-transparent py-4 px-4 ${isActive("profile")}`} onClick={() => window.location.href = '/profile'}>
                     Profile
                 </button>
             </div>

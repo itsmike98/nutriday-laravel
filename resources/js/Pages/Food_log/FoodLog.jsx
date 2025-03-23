@@ -4,7 +4,7 @@ import Layout from "../Layouts/Layout";
 import MealTable from "./MealTable";
 import Popup from "reactjs-popup";
 
-function Aliment() {
+function FoodLog() {
     // estado para controlar los meals
     //const [meal, setMeal] = useState([]);
     // estado para controlar el input del nombre del meal
@@ -47,7 +47,7 @@ function Aliment() {
             });
         }
     }
-    
+
     const handleMeal = (close) => {
         //Enviar nombre del nuevo meal para guardarlo en la database.
         axios.post('/new-meal', {
@@ -70,7 +70,6 @@ function Aliment() {
         const year = splitedDate[2];
         const month = splitedDate[1];
         const day = splitedDate[0];
-        console.log(year, month, day);
         return `${year}-${month}-${day}`;
     }
 
@@ -100,7 +99,7 @@ function Aliment() {
           .catch(function (error) {
             console.log("Error response:", error);
         });
-        
+
         closePopup();
     }
 
@@ -109,9 +108,25 @@ function Aliment() {
         //formato valido para la fecha: 2025-03-05
         axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
             setDbMeals(response.data);
-            console.log("hola", response.data);
         });
     }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
+
+    // Post de prueba para añadir un aliment que se tendra que implementar en el popup al añadir un alimento
+    // const randomAlimentId = Math.floor(Math.random() * 5) + 1;
+    // React.useEffect(() => {
+    //     axios.post('/store-aliment', {
+    //         meal_id: 1,
+    //         aliment_id: randomAlimentId,
+    //         aliment_serving_id: 105947,
+    //         aliment_serving_amount: "1",
+    //       })
+    //       .then(function (response) {
+    //         console.log(response);
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //       });
+    // }, [])
 
     return (
         <>
@@ -179,5 +194,5 @@ function Aliment() {
     );
 }
 
-Aliment.layout = page => <Layout children={page} />;
-export default Aliment;
+FoodLog.layout = page => <Layout children={page} />;
+export default FoodLog;
