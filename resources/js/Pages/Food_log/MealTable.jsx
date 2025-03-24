@@ -55,7 +55,7 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
                 nested
               >
                 {(close) => (
-                  <AddAlimentForm mealTitle={mealTitle} close={close}/>
+                  <AddAlimentForm mealTitle={mealTitle} mealId={mealId} close={close}/>
                 )}
               </Popup>
 
