@@ -69,7 +69,7 @@
   
   /* Primera columna más ancha */
   .meal-table .meal-title {
-    width: 400%;
+    width: 200%;
     text-align: left;
   }
   
@@ -83,7 +83,7 @@
      ========================== */
   @media (max-width: 850px) {
     .meal-table .meal-title {
-      width: 200px;
+      width: 100px;
       text-align: left;
     }
   }

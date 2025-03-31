@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 
 export default function AlimentMealTable({ aliment, mealId, onDelete }) {
-    const [alimentData, setAlimentData] = useState([]);
 
     //post para eliminar un alimento en un meal
     function deleteAliment() {
@@ -30,7 +29,7 @@ export default function AlimentMealTable({ aliment, mealId, onDelete }) {
                     >
                         cancel
                     </button>
-                    <span className="ml-0 group-hover:ml-6 transition-all duration-300">
+                    <span className="ml-0 group-hover:ml-6 transition-all duration-300 truncate overflow-hidden whitespace-nowrap pr-5 font-semibold">
                         {aliment.aliment_name}
                     </span>
                 </td>

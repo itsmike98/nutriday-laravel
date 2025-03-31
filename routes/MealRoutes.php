@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DailyNutritionController;
 use App\Http\Controllers\FatSecretAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meal;
@@ -72,3 +73,5 @@ Route::post('/change-meal-name', function(Request $request){
         return response()->json(['error' => 'Meal not found'], 404);
     }
 })->middleware(['auth', 'verified']);
+
+Route::get("/user-meals/totals/{date}", [DailyNutritionController::class, 'getDailyNutrition'])->middleware(['auth', 'verified']);

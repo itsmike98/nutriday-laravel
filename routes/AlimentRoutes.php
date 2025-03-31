@@ -12,6 +12,8 @@ Route::get('/meals/{meal}/aliments', function (Meal $meal) {
     return response()->json($meal->aliments);
 })->middleware(['auth', 'verified']);
 
+
+
 //Busqueda de alimento por nombre
 Route::get('/aliment/{aliment}', [FatSecretRequestsController::class, 'getAlimentsByName'])->middleware(['auth', 'verified']);
 

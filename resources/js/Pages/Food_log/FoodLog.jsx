@@ -57,20 +57,20 @@ function FoodLog() {
         //Enviar nombre del nuevo meal para guardarlo en la database.
         axios.post('/new-meal', {
             meal_name: inputValue
-          })
-          .then(function (response) {
-            console.log("Success response:", response);
-            setNewMeal(prevState => !prevState); // Alternar el valor de newMeal
-          })
-          .catch(function (error) {
-            console.log("Error response:", error);
-        });
+        })
+            .then(function (response) {
+                console.log("Success response:", response);
+                setNewMeal(prevState => !prevState); // Alternar el valor de newMeal
+            })
+            .catch(function (error) {
+                console.log("Error response:", error);
+            });
         //setMeal([...meal, <MealTable mealTitle={inputValue} key={meal.length} />]);
         setInputValue(''); // Limpiar el input después de agregar la comida
         close();
     };
 
-    function formatDate(date){
+    function formatDate(date) {
         const splitedDate = date.split("/");
         const year = splitedDate[2];
         const month = splitedDate[1];
@@ -81,29 +81,29 @@ function FoodLog() {
     function handleDeleteMeal(mealId) {
         axios.post('/delete-meal', {
             meal_id: mealId
-          })
-          .then(function (response) {
-            console.log("Success response:", response);
-            setDeleteMeal(prevState => !prevState);
-          })
-          .catch(function (error) {
-            console.log("Error response:", error);
-        });
+        })
+            .then(function (response) {
+                console.log("Success response:", response);
+                setDeleteMeal(prevState => !prevState);
+            })
+            .catch(function (error) {
+                console.log("Error response:", error);
+            });
     }
 
-    function handleChangeName(event,mealId, newMealName, closePopup){
+    function handleChangeName(event, mealId, newMealName, closePopup) {
         event.preventDefault();
         axios.post('/change-meal-name', {
             meal_id: mealId,
             meal_name: newMealName
         })
-        .then(function (response) {
-            console.log("Success response:", response);
-            setChangeMeal(prevState => !prevState);
-          })
-          .catch(function (error) {
-            console.log("Error response:", error);
-        });
+            .then(function (response) {
+                console.log("Success response:", response);
+                setChangeMeal(prevState => !prevState);
+            })
+            .catch(function (error) {
+                console.log("Error response:", error);
+            });
         closePopup();
     }
 
@@ -113,7 +113,7 @@ function FoodLog() {
         axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
             setDbMeals(response.data);
         });
-    }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
+    }, [selectedDate, newMeal, deleteMeal, changeMeal]);
 
     return (
         <>
@@ -136,21 +136,36 @@ function FoodLog() {
                         <thead>
                             <tr className="columns">
                                 <th className="meal-title bg-transparent"></th>
-                                <th data-full="Quantiti" data-short="Qua"></th>
+                                <th data-full="Quantity" data-short="Qua"></th>
                                 <th data-full="Calories" data-short="Cal"></th>
                                 <th data-full="Carbs" data-short="Carb"></th>
                                 <th data-full="Fats" data-short="Fat"></th>
                                 <th data-full="Proteins" data-short="Prot"></th>
                             </tr>
                         </thead>
+
+                        <tbody>
+                            {/* MEALS */}
+                            {dbMeals.map((meal, index) => (
+                                <MealTable key={`${meal.user_id}-${index}`}
+                                    mealTitle={meal.meal_name}
+                                    mealId={meal.id}
+                                    onDelete={handleDeleteMeal}
+                                    onChange={handleChangeName}
+                                    updateMeal={updateMeal}
+                                    dbMeals={dbMeals}
+                                    selectedDate={selectedDate}
+                                    formatDate={formatDate}
+                                />
+                            ))}
+
+                            {/* TOTALS ROW */}
+                            <TotalsTable selectedDate={selectedDate} formatDate={formatDate} />
+                        </tbody>
                     </table>
-                    {/* MEALS */}
-                    {dbMeals.map((meal, index) => (
-                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} mealId={meal.id} onDelete={handleDeleteMeal} onChange={handleChangeName} updateMeal={updateMeal} dbMeals={dbMeals} selectedDate={selectedDate} formatDate={formatDate}/>
-                    ))}
-                    <TotalsTable/>
                 </div>
-                
+
+
 
                 <Popup
                     trigger={<button className="font-normal text-[1.2em] text-[#C1C86D]"> Add new meal </button>}
