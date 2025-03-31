@@ -1,0 +1,29 @@
+/* 🔹 Estilos generales */
+.error-box, .normal-box {
+    background-color: #222;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    font-weight: bold;
+    color: #C1C86D; /* Verde claro */
+}
+
+/* 🔥 Animación de parpadeo en verde */
+@keyframes flash {
+    0%, 100% { background-color: #222; } /* Color original */
+    50% { background-color: #737846; } /* Verde */
+}
+
+/* 🔥 Animación de vibración */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.error-box {
+    animation: flash 0.4s ease-in-out 2, shake 0.3s ease-in-out 2;
+}

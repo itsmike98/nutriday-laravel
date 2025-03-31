@@ -3,21 +3,6 @@ import { useState } from "react";
 
 export default function AlimentMealTable({ aliment, mealId, onDelete }) {
     const [alimentData, setAlimentData] = useState([]);
-    const [servingData, setServingData] = useState([]);
-
-    const servingId = aliment.aliment_serving_id;
-
-    React.useEffect(() => {
-        axios.get(`/aliment/id/${aliment.aliment_id}`)
-            .then(function (response) {
-                setAlimentData(response.data.food);
-                setServingData(response.data.food.servings.serving.find(s => s.serving_id === servingId.toString()));
-                console.log('Se ha obtenido el alimento correctamente.', selectedServing);
-            })
-            .catch(function (error) {
-                console.log("Ha habido un error al obtener el alimento.", error);
-            });
-    }, [])
 
     //post para eliminar un alimento en un meal
     function deleteAliment() {
@@ -46,14 +31,14 @@ export default function AlimentMealTable({ aliment, mealId, onDelete }) {
                         cancel
                     </button>
                     <span className="ml-0 group-hover:ml-6 transition-all duration-300">
-                        {alimentData.food_name}
+                        {aliment.aliment_name}
                     </span>
                 </td>
                 <td>{aliment.aliment_serving_amount}</td>
-                <td>{servingData.calories} <span>g</span></td>
-                <td>{servingData.carbohydrate} <span>g</span></td>
-                <td>{servingData.fat}</td>
-                <td>{servingData.protein}</td>
+                <td>{aliment.calories} <span>g</span></td>
+                <td>{aliment.carbs} <span>g</span></td>
+                <td>{aliment.fat}</td>
+                <td>{aliment.protein}</td>
             </tr>
         </>
     )

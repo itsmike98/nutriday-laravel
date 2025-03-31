@@ -3,6 +3,7 @@ import { useState } from "react";
 import Layout from "../Layouts/Layout";
 import MealTable from "./MealTable";
 import Popup from "reactjs-popup";
+import TotalsTable from "./TotalsTable";
 
 function FoodLog() {
     // estado para controlar los meals
@@ -19,9 +20,12 @@ function FoodLog() {
     const [deleteMeal, setDeleteMeal] = useState(false);
     //estado para controlar si se cambió un meal y actualizar en funcion de ello
     const [changeMeal, setChangeMeal] = useState(false);
+    //actualizar alimentos de los meals al cambiar de fecha
+    const [updateMeal, setUpdateMeal] = useState(false);
 
     // Funcion para limitar los dias a -5
     function changeDate(button) {
+
         if (!button) {
             setSelectedDate(prevDate => {
                 const today = new Date();
@@ -46,6 +50,7 @@ function FoodLog() {
                 }
             });
         }
+        setUpdateMeal(prev => !prev);
     }
 
     const handleMeal = (close) => {
@@ -99,7 +104,6 @@ function FoodLog() {
           .catch(function (error) {
             console.log("Error response:", error);
         });
-
         closePopup();
     }
 
@@ -110,23 +114,6 @@ function FoodLog() {
             setDbMeals(response.data);
         });
     }, [selectedDate, newMeal,  deleteMeal, changeMeal]);
-
-    // Post de prueba para añadir un aliment que se tendra que implementar en el popup al añadir un alimento
-    // const randomAlimentId = Math.floor(Math.random() * 5) + 1;
-    // React.useEffect(() => {
-    //     axios.post('/store-aliment', {
-    //         meal_id: 1,
-    //         aliment_id: randomAlimentId,
-    //         aliment_serving_id: 105947,
-    //         aliment_serving_amount: "1",
-    //       })
-    //       .then(function (response) {
-    //         console.log(response);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    // }, [])
 
     return (
         <>
@@ -159,9 +146,11 @@ function FoodLog() {
                     </table>
                     {/* MEALS */}
                     {dbMeals.map((meal, index) => (
-                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} mealId={meal.id} onDelete={handleDeleteMeal} onChange={handleChangeName}/>
+                        <MealTable key={`${meal.user_id}-${index}`} mealTitle={meal.meal_name} mealId={meal.id} onDelete={handleDeleteMeal} onChange={handleChangeName} updateMeal={updateMeal} dbMeals={dbMeals} selectedDate={selectedDate} formatDate={formatDate}/>
                     ))}
+                    <TotalsTable/>
                 </div>
+                
 
                 <Popup
                     trigger={<button className="font-normal text-[1.2em] text-[#C1C86D]"> Add new meal </button>}

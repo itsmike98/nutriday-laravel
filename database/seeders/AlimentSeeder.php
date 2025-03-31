@@ -16,10 +16,10 @@ class AlimentSeeder extends Seeder
     {
         // Definir los aliments
         $aliments = [
-            ['aliment_id' => 123, 'aliment_serving_amount' => '300.8'],
-            ['aliment_id' => 456, 'aliment_serving_amount' => '5.1'],
-            ['aliment_id' => 789, 'aliment_serving_amount' => '10.2'],
-            ['aliment_id' => 101112, 'aliment_serving_amount' => '20'],
+            ['aliment_id' => 4501, 'aliment_name' => 'Bread', 'aliment_serving_amount' => '300.8'],
+            ['aliment_id' => 3422, 'aliment_serving_amount' => '5.1'],
+            ['aliment_id' => 35755, 'aliment_serving_amount' => '10.2'],
+            ['aliment_id' => 35718, 'aliment_serving_amount' => '20'],
         ];
 
         // Crear o actualizar los aliments en la base de datos

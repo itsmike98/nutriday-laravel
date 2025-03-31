@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AlimentItem from "./AlimentItem";
 import RotateLoader from "react-spinners/RotateLoader";
 import SelectedAlimentForm from "./SelectedAlimentForm";
 
-export default function AddAlimentForm({ mealTitle, mealId, close }) {
+export default function AddAlimentForm({ mealTitle, mealId, close, setNewAliment, selectedDate, formatDate }) {  
     const [alimentQuery, setAlimentQuery] = useState("");
     const [alimentsList, setAlimentsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedAliment, setSelectedAliment] = useState(null);
     //manejar el estado de carga al clicar un alimento.
     const [selectedAlimentIsLoading, setSelectedAlimentIsLoading] = useState(false);
-
 
     function handleSearch(event) {
         event.preventDefault();
@@ -39,7 +38,6 @@ export default function AddAlimentForm({ mealTitle, mealId, close }) {
             .then(function (response) {
                 setSelectedAliment(response.data.food);
                 setSelectedAlimentIsLoading(false);
-                console.log('Se ha obtenido el alimento correctamente.', response.data.food);
             })
             .catch(function (error) {
                 console.log("Ha habido un error al obtener el alimento.", error);
@@ -131,7 +129,7 @@ export default function AddAlimentForm({ mealTitle, mealId, close }) {
                         )}
                     </div>
                     {/* Columna derecha */}
-                    <SelectedAlimentForm selectedAliment={selectedAliment} selectedAlimentIsLoading={selectedAlimentIsLoading} mealId={mealId} />
+                    <SelectedAlimentForm selectedAliment={selectedAliment} selectedAlimentIsLoading={selectedAlimentIsLoading} mealId={mealId} close={close} setNewAliment={setNewAliment} selectedDate={selectedDate} formatDate={formatDate}/>
                 </div>
             </div>
         </>

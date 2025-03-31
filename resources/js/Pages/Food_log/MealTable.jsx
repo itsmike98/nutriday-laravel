@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import "../../../../resources/css/Aliment/MealTable.css";
 import 'reactjs-popup/dist/index.css';
@@ -6,12 +6,24 @@ import AddAlimentForm from "./AddAlimentForm";
 import AlimentMealTable from "./AlimentMealTable";
 
 
-export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
+export default function MealTable({ mealTitle, mealId, onDelete, onChange, updateMeal, dbMeals, selectedDate, formatDate }) {
+
+  
 
   const [editMode, setEditMode] = useState(false);
   const [newMealName, setNewMealName] = useState("");
   //Estado para los alimentos
   const [aliments, setAliments] = useState([]);
+
+  //Estado para actualizar cuando se añade un nuevo alimento
+  const [newAliment, setNewAliment] = useState(false);
+
+  useEffect(() => {
+    const mealData = dbMeals.find(meal => meal.id === mealId);
+    if (mealData) {
+      setAliments(mealData.aliments || []);
+    }
+  }, [dbMeals, mealId]);
 
   function handleChange(event) {
     setNewMealName(event.target.value);
@@ -22,12 +34,13 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
   }
 
   //Peticion para obtener los alimentos de el meal actual
-  React.useEffect(() => {
-    //formato valido para la fecha: 2025-03-05
-    axios.get(`/meals/${mealId}/aliments`).then((response) => {
-      setAliments(response.data);
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   console.log("MealTable useEffect");
+  //   //formato valido para la fecha: 2025-03-05
+  //   axios.get(`/meals/${mealId}/aliments`).then((response) => {
+  //     setAliments(response.data);
+  //   });
+  // }, [newAliment, updateMeal]);
 
   function handleDeleteAliment(alimentId) {
     setAliments(prevAliments => prevAliments.filter(aliment => aliment.aliment_id !== alimentId));
@@ -55,7 +68,7 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange }) {
                 nested
               >
                 {(close) => (
-                  <AddAlimentForm mealTitle={mealTitle} mealId={mealId} close={close}/>
+                  <AddAlimentForm mealTitle={mealTitle} mealId={mealId} close={close} setNewAliment={setNewAliment} selectedDate={selectedDate} formatDate={formatDate}/>
                 )}
               </Popup>
 

@@ -15,7 +15,8 @@ Route::get('/user-meals/{data}', function (Request $request, $data) {
     if ($user) {
         if (isset($formatData[0])) { // Verifica si $formatData tiene al menos un elemento
             $meals = Meal::where('user_id', $user->id)
-                         ->whereDate('created_at', $formatData[0]) // Usa whereDate()
+                         ->whereDate('created_at', $formatData[0])
+                         ->with('aliments')
                          ->get(['id' ,'user_id', 'meal_name']);
             return $meals;
         } else {

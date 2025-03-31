@@ -26,9 +26,7 @@ class UserPhysicalData extends Model
         'body_fat',
         'bmi',
         'tmb'
-    ];
-
-    
+    ];    
 
     /**
      * Get the user that owns the UserPhysicalData.

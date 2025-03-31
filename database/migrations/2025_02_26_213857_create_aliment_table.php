@@ -11,11 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('aliment', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->integer('aliment_id');
+        //     $table->integer('aliment_serving_id');
+        //     $table->string('aliment_serving_amount');
+        //     $table->timestamps();
+        // });
+
         Schema::create('aliment', function (Blueprint $table) {
             $table->id();
             $table->integer('aliment_id');
+            $table->string('aliment_name');
             $table->integer('aliment_serving_id');
-            $table->string('aliment_serving_amount');
+            $table->float('aliment_serving_amount');
+            $table->float('calories');
+            $table->float('carbs');
+            $table->float('fat');
+            $table->float('protein');
             $table->timestamps();
         });
     }

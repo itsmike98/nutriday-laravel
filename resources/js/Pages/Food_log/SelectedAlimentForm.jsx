@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { SyncLoader } from "react-spinners";
+import '../../../css/Food_log_css/SelectedAlimentForm.css';
 
-export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIsLoading, mealId }) {
+export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIsLoading, mealId, close, setNewAliment, selectedDate, formatDate={formatDate} }) {
     const [foodServing, setFoodServing] = useState(null);
     // Estado para controlar el despliegue
     const [isExpanded, setIsExpanded] = useState(false);
     // Estado para manejar los meals del dia en el form
     const [dailyMeals, setDailyMeals] = useState([]);
+    //Estado para controlar si hay alimento seleccionado o no lo hay
+    const [isAlimentSelected, setIsAlimentSelected] = useState(false);
+    //Estado para manejar las unidades con los servings del alimento
+    const [servings, setServings] = useState([]);
 
     useEffect(() => {
-
-        const date = new Date().toISOString().split('T')[0];
-
-        axios.get(`/user-meals/${date}`)
+        console.log(selectedDate);
+        axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`)
             .then(function (response) {
                 setDailyMeals(response.data);
             })
@@ -22,9 +25,12 @@ export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIs
     }, [])
 
     useEffect(() => {
+
         if (!selectedAliment || !selectedAliment.servings || !selectedAliment.servings.serving) {
             return;
         }
+
+        setServings(selectedAliment.servings.serving);
 
         let servingsArrays = selectedAliment.servings.serving;
         let foundServing = servingsArrays.find(serving => serving.serving_description === "100 g") || servingsArrays[0];
@@ -39,12 +45,53 @@ export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIs
         event.preventDefault();
 
         if (!selectedAliment) {
+            setIsAlimentSelected(true);
+            setTimeout(() => {
+                setIsAlimentSelected(false);
+            }, 1000);
             return;
         }
+
+        setIsAlimentSelected(false);
+
         const portion = event.target.portion.value;
         const mealIdSelected = event.target.mealselected.value;
         const unitSelected = event.target.unitselected.value;
-        console.log(selectedAliment, mealIdSelected, portion, unitSelected);
+        const selectedServing = servings.find(serving => serving.serving_id === unitSelected);
+
+        //Datos de el nuevo alimento para enviar
+        const newAlimentData = {
+            aliment: selectedAliment,
+            selectedServing: selectedServing,
+            mealIdSelected: mealIdSelected,
+            portion: portion,
+            unitSelected: unitSelected
+        }
+
+        // crear el nuevo alimento con los datos introduducios en el formulario
+        axios.post('/store-aliment', {
+            meal_id: parseInt(newAlimentData.mealIdSelected),
+            aliment_id: parseInt(newAlimentData.aliment.food_id),
+            aliment_name: newAlimentData.aliment.food_name,
+            aliment_serving_id: parseInt(newAlimentData.unitSelected),
+            aliment_serving_amount: parseFloat(newAlimentData.portion),
+            metric_serving_amount: parseFloat(newAlimentData.selectedServing.metric_serving_amount),
+            calories: parseFloat(newAlimentData.selectedServing.calories),
+            carbs: parseFloat(newAlimentData.selectedServing.carbohydrate),
+            fat: parseFloat(newAlimentData.selectedServing.fat),
+            protein: parseFloat(newAlimentData.selectedServing.protein),        
+          })
+          .then(function (response) {
+            setNewAliment(true);
+            console.log("El alimento se ha creado correctametne:",response);
+          })
+          .catch(function (error) {
+            console.log("Ha habido un error: ", error);
+          });
+
+          setNewAliment(false);
+
+        close();
     }
     return (
         <div className="flex-grow rounded-[15px] flex flex-col w-full md:w-auto mx-2">
@@ -137,18 +184,25 @@ export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIs
                                 />
                             </div>
                         ) : (
-                            <div className="bg-[#222] p-2 rounded-lg mb-5 py-7">
-                                <p className="text-avocado text-center font-semibold">Select an aliment</p>
-                            </div>
+                            isAlimentSelected ? (
+                                <div className="error-box">
+                                    <p>Select an aliment</p>
+                                </div>
+                            ) : (
+                                <div className="normal-box">
+                                    <p>Select an aliment</p>
+                                </div>
+                            )
+
                         )
                     )}
                     {/* Select meal */}
                     <label className="text-white mb-1">Select meal</label>
-                    <select 
-                        name="mealselected" 
+                    <select
+                        name="mealselected"
                         className="bg-[#333] text-white p-2 rounded-md border border-[#444] py-2 text-center"
                         required
-                        >
+                    >
                         {dailyMeals
                             //ordenamos los meals para que aparezca primero al que hemos clicado
                             .sort((a, b) => {
@@ -177,11 +231,18 @@ export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIs
                         name="unitselected"
                         className="bg-[#333] text-white p-2 rounded-md border border-[#444] w-full text-center"
                         required
+                        defaultValue=""
                     >
-                        <option value="" disabled selected>unit</option> {/* Esta es la opción placeholder */}
-                        <option value="gramos">gramos</option>
-                        <option value="mililitros">mililitros</option>
-                        <option value="porciones">porciones</option>
+                        {servings
+                        //ordenar y poner los 100g la primera opcion siempre.
+                        .sort((a, b) => {
+                            if (a.serving_description === "100 g") return -1;
+                            if (b.serving_description === "100 g") return 1;
+                            return 0;
+                        })
+                        .map(serving => (
+                            <option key={serving.serving_id} value={serving.serving_id}>{serving.serving_description}</option>
+                        ))}
                     </select>
 
                 </div >
