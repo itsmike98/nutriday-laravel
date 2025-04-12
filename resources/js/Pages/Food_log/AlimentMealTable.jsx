@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 export default function AlimentMealTable({ aliment, mealId, onDelete }) {
 
     //post para eliminar un alimento en un meal
     function deleteAliment() {
-        axios.post('/delete-aliment', {
-            meal_id: mealId,
-            aliment_id: aliment.aliment_id,
-        })
-            .then(function (response) {
-                console.log(response);
-                onDelete(aliment.aliment_id);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+    console.log("Aliment object:", aliment); // <-- Verifica qué contiene el objeto
+
+    axios.post('/delete-aliment', {
+        meal_id: mealId,
+        aliment_id: aliment.pivot.aliment_id, // <-- Asegúrate de que esta propiedad existe
+    })
+    .then(function (response) {
+        console.log('Alimento eliminado');
+        console.log(response);
+        onDelete(aliment.aliment_id);
+    })
+    .catch(function (error) {
+        console.log("Error en deleteAliment:", error.response?.data || error);
+    });
+}
+
 
     //printa el nombre del alimento, y luego el serving id escogido, no terminado, se tienen que hacer primero los calculos y luego printarlos aqui
     return (
@@ -33,11 +37,11 @@ export default function AlimentMealTable({ aliment, mealId, onDelete }) {
                         {aliment.aliment_name}
                     </span>
                 </td>
-                <td>{aliment.aliment_serving_amount}</td>
-                <td>{aliment.calories} <span>g</span></td>
-                <td>{aliment.carbs} <span>g</span></td>
-                <td>{aliment.fat}</td>
-                <td>{aliment.protein}</td>
+                <td>{aliment.pivot.serving_amount}</td>
+                <td>{aliment.pivot.calories} <span>g</span></td>
+                <td>{aliment.pivot.carbs} <span>g</span></td>
+                <td>{aliment.pivot.fat}</td>
+                <td>{aliment.pivot.protein}</td>
             </tr>
         </>
     )

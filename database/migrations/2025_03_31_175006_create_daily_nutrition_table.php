@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('daily_nutrition', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->date('date')->unique();
+            $table->date('date');
             $table->integer('total_calories')->default(0);
             $table->decimal('total_carbs', 8, 2)->default(0);
             $table->decimal('total_protein', 8, 2)->default(0);

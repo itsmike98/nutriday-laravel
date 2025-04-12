@@ -15,8 +15,8 @@ class TokenController extends Controller
 
         if (!$accessToken) {
             // Si el token no está en caché o ha expirado, obtener uno nuevo
-            $clientID = env('FATSECRET_CLIENT_ID');
-            $clientSecret = env('FATSECRET_CLIENT_SECRET');
+            $clientID = "5f03e151b864498b963681b0d911dbae";
+            $clientSecret = "f00d3d52895045e99799711d754e6c61";
 
             $response = Http::withBasicAuth($clientID, $clientSecret)
                 ->asForm()

@@ -12,9 +12,12 @@ class Meal extends Model
 
     public function aliments()
     {
-        return $this->belongsToMany(Aliment::class, 'meal_aliment', 'meal_id', 'aliment_id')->withTimestamps();
+        return $this->belongsToMany(Aliment::class, 'meal_aliment', 'meal_id', 'aliment_id')
+            ->withPivot(['serving_amount', 'aliment_serving_id', 'calories', 'carbs', 'fat', 'protein'])
+            ->withTimestamps();
     }
-    
+
+
 
 
     public function user()

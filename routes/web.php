@@ -6,9 +6,11 @@ use App\Http\Controllers\FoodLogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserPhysicalDataController;
 use App\Models\Aliment;
+use App\Models\nutrition_goals;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Models\UserPhysicalData;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -56,6 +58,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('user-data', function () {
+    $userData = UserPhysicalData::where('user_id', Auth::id())->first();
+    if ($userData) {
+        return response()->json($userData);
+    } else {
+        return response()->json(['error' => 'No se encontraron datos físicos para el usuario'], 404);
+    }
+});
+
+Route::get('user-data-nutrition', function () {
+    $nutritionData = nutrition_goals::where('user_id', Auth::id())->first();
+    if ($nutritionData) {
+        return response()->json($nutritionData);
+    } else {
+        return response()->json(['error' => 'No se encontraron datos de nutrición para el usuario'], 404);
+    }
+});
+
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/MealRoutes.php';
 require __DIR__ . '/AlimentRoutes.php';
+require __DIR__ . '/DashboardRoutes.php';

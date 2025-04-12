@@ -18,6 +18,12 @@ return new class extends Migration
             
             $table->foreign('meal_id')->references('id')->on('meal')->onDelete('cascade');
             $table->foreign('aliment_id')->references('id')->on('aliment')->onDelete('cascade');
+            $table->float('serving_amount');
+            $table->integer('aliment_serving_id');
+            $table->float('calories');
+            $table->float('carbs');
+            $table->float('fat');
+            $table->float('protein');
         
             $table->timestamps();
         });

@@ -22,10 +22,10 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <header className="flex justify-between items-center bg-[#1a1a1a] p-4 md:p-6 text-white">
+            <header className="flex justify-between items-center bg-[#1a1a1a] p-4 md:p-6 px-4 md:px-16 lg:px-32 text-white">
                 {/* Logo */}
                 <div className="text-2xl font-bold flex items-center">
-                    Nutriday
+                    <img src="assets/images/Imagen-corporativa/nav-logotipo.png" alt="nutriday-logo" className="w-36" />
                 </div>
 
                 {/* Right Side */}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\nutrition_goals;
 use App\Models\UserPhysicalData;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class UserPhysicalDataController extends Controller
 
         $calculatedData = $this->calculateAndRespond($validatedData, $userId);
 
+        $this->storeMacros($this->calculateMacros($calculatedData['finalCalories']));
+
         // Guardar datos físicos del usuario
         $this->saveUserPhysicalData($userId, $validatedData, $calculatedData);
 
@@ -42,6 +45,7 @@ class UserPhysicalDataController extends Controller
             'gender' => 'required|string',
             'height' => 'required|string',
             'weight' => 'required|string',
+            'country' => 'required|string',
             'activityLevel' => 'required|string',
             'goal' => 'required|string',
             'approach' => 'nullable|string',
@@ -49,30 +53,31 @@ class UserPhysicalDataController extends Controller
     }
 
     private function saveUserPhysicalData($userId, $data, $calculatedData)
-{
-    // Crear o actualizar registro de UserPhysicalData
-    UserPhysicalData::updateOrCreate(
-        ['user_id' => $userId], // Condición para buscar
-        [ // Datos a actualizar o crear
-            'height' => $data['height'],
-            'weight' => $data['weight'],
-            'activity_level' => $data['activityLevel'],
-            'main_goal' => $data['goal'],
-            'approach' => $data['approach'],
-            'questions_answered' => true,
-            'daily_caloric_intake' => $calculatedData['finalCalories'],
-            'body_fat' => $calculatedData['fatPercentage'],
-            'bmi' => $calculatedData['imc'],
-            'tmb' => $calculatedData['tmb'],
-        ]
-    );
+    {
+        // Crear o actualizar registro de UserPhysicalData
+        UserPhysicalData::updateOrCreate(
+            ['user_id' => $userId], // Condición para buscar
+            [ // Datos a actualizar o crear
+                'height' => $data['height'],
+                'weight' => $data['weight'],
+                'activity_level' => $data['activityLevel'],
+                'main_goal' => $data['goal'],
+                'approach' => $data['approach'],
+                'questions_answered' => true,
+                'daily_caloric_intake' => $calculatedData['finalCalories'],
+                'body_fat' => $calculatedData['fatPercentage'],
+                'bmi' => $calculatedData['imc'],
+                'tmb' => $calculatedData['tmb'],
+            ]
+        );
 
-    // Actualizar birthYear y gender en la tabla User
-    User::where('id', $userId)->update([
-        'birth_year' => $data['birthYear'],
-        'gender' => $data['gender'],
-    ]);
-}
+        // Actualizar birthYear y gender en la tabla User
+        User::where('id', $userId)->update([
+            'birth_year' => $data['birthYear'],
+            'gender' => $data['gender'],
+            'country' => $data['country'],
+        ]);
+    }
 
 
     private function calculateAndRespond($data)
@@ -142,5 +147,45 @@ class UserPhysicalDataController extends Controller
             'Gain weight' => $approach === 'Aggressive' ? 1.25 : 1.15,
         ];
         return $caloriesActLvl * ($modifiers[$goal] ?? 1.0);
+    }
+
+    private function calculateMacros($calories)
+    {
+        // Definir los porcentajes
+        $carbPercentage = 50; // 50% de las calorías provienen de los carbohidratos
+        $proteinPercentage = 30; // 30% de las calorías provienen de las proteínas
+        $fatPercentage = 20; // 20% de las calorías provienen de las grasas
+
+        // Calorías asignadas a cada macronutriente
+        $carbCalories = ($carbPercentage / 100) * $calories;
+        $proteinCalories = ($proteinPercentage / 100) * $calories;
+        $fatCalories = ($fatPercentage / 100) * $calories;
+
+        // Convertir calorías a gramos
+        $carbohydrates = $carbCalories / 4; // 1g de carbohidrato = 4 kcal
+        $proteins = $proteinCalories / 4; // 1g de proteína = 4 kcal
+        $fats = $fatCalories / 9; // 1g de grasa = 9 kcal
+
+        // Devolver los valores en un array
+        return [
+            'calories' => $calories,
+            'carbohydrates' => round($carbohydrates, 2),
+            'proteins' => round($proteins, 2),
+            'fats' => round($fats, 2),
+        ];
+    }
+
+    // Guardar los macros en la base de datos
+    private function storeMacros($macros)
+    {
+        nutrition_goals::updateOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'calories' => $macros['calories'],
+                'carbohydrates' => $macros['carbohydrates'],
+                'proteins' => $macros['proteins'],
+                'fats' => $macros['fats'],
+            ]
+        );
     }
 }

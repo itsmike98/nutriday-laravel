@@ -6,29 +6,38 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 
+//? =================== GET REQUESTS ==================== !//
+
 // Ruta para obtener los datos de la tabla meal del usuario actual en un dia concreto
 // http://nutriday.local/user-meals/2025-03-05
 Route::get('/user-meals/{data}', function (Request $request, $data) {
     $user = $request->user(); // Obtiene el usuario autenticado
-
     $formatData = explode(" ", $data);
 
-    if ($user) {
-        if (isset($formatData[0])) { // Verifica si $formatData tiene al menos un elemento
-            $meals = Meal::where('user_id', $user->id)
-                         ->whereDate('created_at', $formatData[0])
-                         ->with('aliments')
-                         ->get(['id' ,'user_id', 'meal_name']);
-            return $meals;
-        } else {
-            return response()->json(['error' => 'Formato de fecha incorrecto'], 400); // Devuelve un error si el formato es incorrecto
-        }
-    } else {
+    if (!$user) {
         return response()->json(['error' => 'Usuario no autenticado'], 401);
     }
 
+    if (!isset($formatData[0])) {
+        return response()->json(['error' => 'Formato de fecha incorrecto'], 400);
+    }
+
+    $meals = Meal::where('user_id', $user->id)
+                 ->whereDate('created_at', $formatData[0])
+                 ->with(['aliments' => function ($query) {
+                     $query->select('aliment.id', 'aliment.aliment_name') // Selecciona solo los datos relevantes
+                           ->withPivot(['serving_amount', 'aliment_serving_id', 'calories', 'carbs', 'fat', 'protein']);
+                 }])
+                 ->get(['id', 'user_id', 'meal_name']);
+
+    return response()->json($meals);
 })->middleware(['auth', 'verified']);
 
+
+Route::get("/user-meals/totals/{date}", [DailyNutritionController::class, 'getDailyNutrition'])->middleware(['auth', 'verified']);
+
+
+//? =================== POST REQUESTS ==================== !//
 
 //Ruta para añadir un nuevo meal a la base de datos
 Route::post('/new-meal', function (Request $request) {
@@ -73,5 +82,3 @@ Route::post('/change-meal-name', function(Request $request){
         return response()->json(['error' => 'Meal not found'], 404);
     }
 })->middleware(['auth', 'verified']);
-
-Route::get("/user-meals/totals/{date}", [DailyNutritionController::class, 'getDailyNutrition'])->middleware(['auth', 'verified']);

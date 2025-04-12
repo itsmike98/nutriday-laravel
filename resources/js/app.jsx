@@ -5,6 +5,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import 'material-icons/iconfont/material-icons.css';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

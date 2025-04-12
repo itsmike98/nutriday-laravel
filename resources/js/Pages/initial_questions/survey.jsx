@@ -19,6 +19,7 @@ function Survey() {
         gender: "",
         height: "",
         weight: "",
+        country: "",
         activityLevel: "",
         goal: "",
         approach: ""
@@ -28,7 +29,7 @@ function Survey() {
     const validateScreen = () => {
         switch (currentScreen) {
             case 1:
-                return answers.birthYear && answers.gender && answers.height && answers.weight;
+                return answers.birthYear && answers.gender && answers.height && answers.weight && answers.country;
             case 2:
                 return answers.activityLevel;
             case 3:
@@ -58,6 +59,7 @@ function Survey() {
 
     const [calories, setCalories] = useState(null);
 
+    //guardar los datos del cuestionario en la base de datos
     const finishSurvey = () => {
         console.log('these are the anwers:', answers);
         axios.post('http://nutriday.local/guardar-datos', answers)

@@ -82,14 +82,12 @@ export default function SelectedAlimentForm({ selectedAliment, selectedAlimentIs
             protein: parseFloat(newAlimentData.selectedServing.protein),        
           })
           .then(function (response) {
-            setNewAliment(true);
+            setNewAliment(prevState => !prevState);
             console.log("El alimento se ha creado correctametne:",response);
           })
           .catch(function (error) {
             console.log("Ha habido un error: ", error);
           });
-
-          setNewAliment(false);
 
         close();
     }

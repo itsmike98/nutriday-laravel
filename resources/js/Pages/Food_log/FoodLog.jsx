@@ -22,6 +22,10 @@ function FoodLog() {
     const [changeMeal, setChangeMeal] = useState(false);
     //actualizar alimentos de los meals al cambiar de fecha
     const [updateMeal, setUpdateMeal] = useState(false);
+    //Estado para actualizar cuando se añade un nuevo alimento
+    const [newAliment, setNewAliment] = useState(false);
+    //estado para actualizar los totales
+    const [totals, setTotals] = useState(false);
 
     // Funcion para limitar los dias a -5
     function changeDate(button) {
@@ -113,7 +117,7 @@ function FoodLog() {
         axios.get(`/user-meals/${formatDate(selectedDate.toLocaleDateString('en-GB'))}`).then((response) => {
             setDbMeals(response.data);
         });
-    }, [selectedDate, newMeal, deleteMeal, changeMeal]);
+    }, [selectedDate, newMeal, deleteMeal, changeMeal, newAliment]);
 
     return (
         <>
@@ -156,11 +160,12 @@ function FoodLog() {
                                     dbMeals={dbMeals}
                                     selectedDate={selectedDate}
                                     formatDate={formatDate}
+                                    setNewAliment={setNewAliment}
                                 />
                             ))}
 
                             {/* TOTALS ROW */}
-                            <TotalsTable selectedDate={selectedDate} formatDate={formatDate} />
+                            <TotalsTable selectedDate={selectedDate} formatDate={formatDate}  newAliment={newAliment}/>
                         </tbody>
                     </table>
                 </div>

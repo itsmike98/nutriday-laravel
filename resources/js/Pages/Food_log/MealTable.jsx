@@ -6,7 +6,7 @@ import AddAlimentForm from "./AddAlimentForm";
 import AlimentMealTable from "./AlimentMealTable";
 
 
-export default function MealTable({ mealTitle, mealId, onDelete, onChange, updateMeal, dbMeals, selectedDate, formatDate }) {
+export default function MealTable({ mealTitle, mealId, onDelete, onChange, updateMeal, dbMeals, selectedDate, formatDate, setNewAliment }) {
 
 
 
@@ -14,9 +14,6 @@ export default function MealTable({ mealTitle, mealId, onDelete, onChange, updat
   const [newMealName, setNewMealName] = useState("");
   //Estado para los alimentos
   const [aliments, setAliments] = useState([]);
-
-  //Estado para actualizar cuando se añade un nuevo alimento
-  const [newAliment, setNewAliment] = useState(false);
 
   useEffect(() => {
     const mealData = dbMeals.find(meal => meal.id === mealId);
