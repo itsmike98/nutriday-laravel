@@ -1,0 +1,61 @@
+.dashboard-container{
+    margin-top: 20px !important;
+    max-width: 2000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 420px 420px 420px;
+    gap: 15px;
+}
+
+.card{
+    background-color: #222;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.card-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-title h3{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+hr{
+    border: 0;
+    height: 2px;
+    background-color: #575757;
+    margin: 10px 0px 20px 0px;
+}
+
+/*? ------------ Cards ----------- */
+
+.calories{
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.water{
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
+.macronutrients{
+    grid-column-start: 1;
+    grid-column-end: 6;
+
+}
+
+.recipe-idea{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.follow-up{
+    grid-column-start: 3;
+    grid-column-end: 6;
+}

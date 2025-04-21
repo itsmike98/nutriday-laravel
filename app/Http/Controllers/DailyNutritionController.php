@@ -16,6 +16,14 @@ class DailyNutritionController extends Controller
     {
         $totals = $this->calculateNutrition($date);
 
+        if (is_null($totals)) {
+            $newDailyLog = $this->createDailyTotal($date);
+            if ($newDailyLog) {
+                return response()->json(['success' => 'Se ha creado un nuevo registro diario.']);
+            }
+            return response()->json(['error' => 'No se ha podido crear el nuevo registro diario.'], 401);
+        }
+
         // Guardar los datos en la base de datos
         $this->storeData($totals, $date);
 
@@ -35,7 +43,7 @@ class DailyNutritionController extends Controller
 
 
         if ($todayMeals->isEmpty()) {
-            return response()->json(['error' => 'No se encontraron meals para la fecha especificada'], 404);
+            return null;
         }
 
         $totalNutritionData = [
@@ -51,25 +59,12 @@ class DailyNutritionController extends Controller
                 $totalNutritionData["carbs"] += floatval($aliment->pivot->carbs ?? 0);
                 $totalNutritionData["fat"] += floatval($aliment->pivot->fat ?? 0);
                 $totalNutritionData["protein"] += floatval($aliment->pivot->protein ?? 0);
-
-                // Log para depuración
-                Log::info('Iteración de cálculo:', [
-                    'date'  => $date,
-                    'meal_id' => $meal->id,
-                    'aliment_id' => $aliment->id,
-                    'calories' => $aliment->pivot->calories,
-                    'carbs' => $aliment->pivot->carbs,
-                    'fat' => $aliment->pivot->fat,
-                    'protein' => $aliment->pivot->protein,
-                    'totalNutritionData' => $totalNutritionData,
-                ]);
             }
         }
-
         return $totalNutritionData;
     }
 
-
+    //Almacenar la informacion
     private function storeData($totals, $date)
     {
 
@@ -78,8 +73,6 @@ class DailyNutritionController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Usuario no autenticado'], 401);
         }
-
-        Log::info('storeData ejecutada para usuario ID ' . $user->id . ' en fecha ' . $date);
 
         // Asegurar que la fecha tenga el formato correcto (YYYY-MM-DD)
         $date = \Carbon\Carbon::parse($date)->format('Y-m-d');
@@ -97,5 +90,37 @@ class DailyNutritionController extends Controller
                 'total_protein' => $totals['protein'],
             ]
         );
+    }
+
+    //si el daily de la fecha especificada no existe, se crea automaticamente.
+    public function createDailyTotal($date)
+    {
+        $user = Auth::user();
+
+        $created = daily_nutrition::create(
+            [
+                'user_id' => $user->id,
+                'date' => $date,
+                'total_calories' => 0,
+                'total_carbs' => 0,
+                'total_fat' => 0,
+                'total_protein' => 0,
+            ]
+        );
+
+        return $created ? true : false;
+    }
+
+    //obtener todas las columnas de el daily nutrition con la fecha especificada.
+    public function getDailyTotals($date)
+    {
+        $user = Auth::user();
+
+        $dbDailyNutrition = daily_nutrition::where('user_id', $user->id)->where('date', $date)->first();
+
+        if($dbDailyNutrition){
+        return response()->json($dbDailyNutrition);
+        }
+        return response()->json(['error', 'No se ha encontrado ningun daily_nutrition de el dia de hoy.']);
     }
 }

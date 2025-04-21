@@ -27,6 +27,7 @@ class AlimentController extends Controller
             'protein' => 'required|numeric',
         ]);
 
+        //Calcular cuanto se esta consumiendo de cada macronutriente
         function calculateNutritionalData($valor_nutricional_por_porcion, $cantidad_consumida, $metric_serving_amount)
         {
             return ($valor_nutricional_por_porcion * $cantidad_consumida) / $metric_serving_amount;
@@ -55,8 +56,6 @@ class AlimentController extends Controller
             $dbAliment->aliment_name = $request->aliment_name;
             $dbAliment->save();
         }
-
-        Log::info('Meal ID recibido: ' . $request->meal_id);
 
         // Crear la relación en la tabla intermedia meal_aliment
         $dbMeal->aliments()->attach($dbAliment->id, [

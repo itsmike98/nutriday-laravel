@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('total_fat', 8, 2)->default(0);
             $table->decimal('total_fiber', 8, 2)->default(0);
             $table->decimal('total_sugar', 8, 2)->default(0);
+            $table->decimal('total_water')->default(0);
             $table->timestamps();
         });
     }

@@ -39,11 +39,9 @@ const Calories = ({ todayTotals, userPhysicalData }) => {
             },
         ],
     };
-
-    console.log(todayTotals);
-
     return (
-        <div className="flex flex-row flex-1 rounded-lg overflow-hidden h-[270px] bg-[#222]">
+
+        <div className="flex flex-row flex-1 rounded-lg overflow-hidden h-[270px] ">
             {/* Parte izquierda: Gráfico */}
             <div className="flex flex-col items-center justify-center w-1/2 relative">
                 <Doughnut className="z-10" data={data} />
@@ -75,7 +73,10 @@ const Calories = ({ todayTotals, userPhysicalData }) => {
                 </div>
 
                 {/* Botón de Añadir alimento */}
-                <button className="w-full py-3 bg-[#transparent] border-2 border-[#C1C86D] text-white font-semibold rounded-lg hover:bg-[#C1C86D] transition duration-300">
+                <button
+                    className="w-full py-3 bg-[#transparent] border-2 border-[#C1C86D] text-white font-semibold rounded-lg hover:bg-[#C1C86D] transition duration-300"
+                    onClick={() => window.location.href = '/food-log'}
+                >
                     Añadir alimento
                 </button>
             </div>

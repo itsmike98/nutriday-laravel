@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Models\UserPhysicalData;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 
 // ruta para la landing page
@@ -57,6 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//ruta para hacer logout mediante un post
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::get('user-data', function () {
     $userData = UserPhysicalData::where('user_id', Auth::id())->first();

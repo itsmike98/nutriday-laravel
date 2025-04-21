@@ -13,7 +13,7 @@ class RandomRecipeController extends Controller
         $tokenController = new TokenController();
          $token = $tokenController->getToken();
          
-         $randomPage = rand(0, 100);
+         $randomPage = rand(0, 50);
         // Llamar a la API de FatSecret para obtener una receta aleatoria
         $response = Http::withToken($token)->get('https://platform.fatsecret.com/rest/recipes/search/v3', [
             'method' => 'recipes.search.v3',
@@ -25,7 +25,8 @@ class RandomRecipeController extends Controller
             'require_images' => true, // solo recetas con imagen
             'sortby' => 'caloriesPerServingAscending',
             'page_number' => $randomPage,
-        ]);
+            'recipe_types' => 'main dish',
+    ]);
 
         $randomRecipe = json_decode($response);
         

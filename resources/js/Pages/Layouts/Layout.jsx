@@ -20,24 +20,35 @@ export default function Layout({ children }) {
         return pageMappings[url] || "";
     };
 
+    function logout() {
+        axios.post('/logout')
+            .then(response => {
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Logout failed:', error);
+            });
+    }
+
     return (
         <>
-            <header className="flex justify-between items-center bg-[#1a1a1a] p-4 md:p-6 px-4 md:px-16 lg:px-32 text-white">
+            <header className="flex justify-between items-center bg-[#1a1a1a] p-2 px-4 md:px-16 lg:px-32 text-white">
                 {/* Logo */}
                 <div className="text-2xl font-bold flex items-center">
-                    <img src="assets/images/Imagen-corporativa/nav-logotipo.png" alt="nutriday-logo" className="w-36" />
+                    <a href="/dashboard">
+                        <img src="assets/images/Imagen-corporativa/nav-logotipo.png" alt="nutriday-logo" className="w-32" />
+                    </a>
                 </div>
 
                 {/* Right Side */}
                 <div className="flex items-center gap-6">
-                    <span className="font-bold">22/10/2024</span>
-                    <Link href="/settings" className="text-gray-400 hover:text-white">Settings</Link>
-                    <Link href="/logout" className="text-gray-400 hover:text-white">Log out</Link>
+                    <span className="text-gray-400 hover:text-white transition" >22/10/2024</span>
+                    <button onClick={logout} className="text-gray-400 hover:text-white transition">Log out</button>
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="mx-4 md:mx-16 lg:mx-32 mt-20">
+            <main className="mx-4 md:mx-16 lg:mx-32 mt-10">
                 <Navigation page={getPageName()} />
                 {children}
             </main>
