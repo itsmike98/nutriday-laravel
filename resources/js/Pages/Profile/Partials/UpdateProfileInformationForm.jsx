@@ -4,11 +4,11 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
+import "../../../../css/Profile/profile-info.css";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
     status,
-    className = '',
 }) {
     const user = usePage().props.auth.user;
 
@@ -25,15 +25,17 @@ export default function UpdateProfileInformation({
     };
 
     return (
-        <section className={className}>
+        <section>
             <header>
-                <h2 className="text-lg font-medium text-white">
-                    Profile Information
-                </h2>
+                <h3 className="text-white font-bold text-[1.3em]">
+                    Update profile information
+                </h3>
 
                 <p className="mt-1 text-sm text-white">
                     Update your account's profile information and email address.
                 </p>
+
+                <hr className='mt-5'/>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
@@ -42,7 +44,7 @@ export default function UpdateProfileInformation({
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full !bg-[#333]"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -59,7 +61,7 @@ export default function UpdateProfileInformation({
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full !bg-[#333]"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required

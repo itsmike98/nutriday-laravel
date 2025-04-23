@@ -101,7 +101,7 @@ const Water = ({ formattedDate }) => {
                 <h3 className="text-[1.7em] font-bold">{userLiters} L</h3>
                 <div className="bg-[#171717] rounded-xl h-[230px] w-[130px] flex items-end justify-center overflow-hidden">
                     <div
-                        className="bg-blue-500 opacity-50 rounded-xl flex justify-center items-center w-full transition-all duration-700 ease-in-out"
+                        className="bg-blue-500 rounded-xl flex justify-center items-center w-full transition-all duration-700 ease-in-out"
                         style={{ height: `${barPercentage}%` }}
                     >
                         <span className="font-bold">{num} L</span>
