@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, usePage } from '@inertiajs/react';
+import '../../../css/nav-menu.css';
 
-const Navigation = ({ page }) => {
-    // Función para determinar si un botón es activo
-    const isActive = (name) => name === page ? "border-b-4 border-[#C1C86D]" : "hover:border-b-4 hover:border-x-zinc-500";
+const Navigation = () => {
+    const { url } = usePage(); // url actual para marcar activo
+    const [isOpen, setIsOpen] = useState(false); // estado del menú móvil
+
+    const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <div className="mx-auto w-full max-w-[2000px]">
-            <div className="overflow-hidden bg-[#222] shadow-sm sm:rounded-lg flex flex-row gap-10 px-6">
-                <button className={`bg-transparent py-4 px-4 ${isActive("Dashboard")}`} onClick={() => window.location.href = '/dashboard'}>
-                    Dashboard
-                </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("Food-log")}`} onClick={() => window.location.href = '/food-log'}>
-                    FoodLog
-                </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("informs")}`} onClick={() => window.location.href = '/informs'}>
+        <div className="nav-container">
+            <button className="hamburger" onClick={toggleMenu}>
+                ☰
+            </button>
+            <nav className={isOpen ? "open" : ""}>
+                <Link href="/dashboard" className={url === "/dashboard" ? "item active" : "item"}>
+                    Home
+                </Link>
+                <Link href="/food-log" className={url === "/food-log" ? "item active" : "item"}>
+                    Food Log
+                </Link>
+                <Link href="/informs" className={url === "/informs" ? "item active" : "item"}>
                     Informs
-                </button>
-                <button className={`bg-transparent py-4 px-4 ${isActive("profile")}`} onClick={() => window.location.href = '/profile'}>
+                </Link>
+                <Link href="/profile" className={url === "/profile" ? "item active" : "item"}>
                     Profile
-                </button>
-            </div>
+                </Link>
+            </nav>
         </div>
     );
 };

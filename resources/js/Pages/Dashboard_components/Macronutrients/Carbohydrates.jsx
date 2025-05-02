@@ -42,7 +42,7 @@ export default function Carbohydrates({ nutritionGoals, todayTotals }) {
 
     return (
         <>
-        <div className="relative w-full h-[250px] flex items-center justify-center">
+        <div className="relative w-full h-[150px] md:h-[250px] flex items-center justify-center">
             {/* Fondo (Background) - centrado de forma normal */}
             <Doughnut data={background} />
 

@@ -18,7 +18,7 @@ export default function Landing({ loginRoute, registerRoute }) {
             <nav>
                 <div class="nav-container">
                     <div>
-                        <a href="#" class="logo">Nutriday</a>
+                        <img src="assets/images/Imagen-corporativa/nav-logotipo.png" alt="nutriday_logo" className="h-14" />
                     </div>
                     <div>
                         <a href={loginRoute} class="nav-item">Login</a>

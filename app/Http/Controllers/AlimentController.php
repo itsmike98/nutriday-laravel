@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Log;
 class AlimentController extends Controller
 {
 
-    //todo: La funcion storeAliment ya funciona correctamente con la nueva configuracion de la base de datos.
-    //todo: Ahora se tiene que mirar de corregir el controller que lleva la logica de calcular los datos de el alimento
+
     public function storeAliment(Request $request)
     {
         $request->validate([

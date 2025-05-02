@@ -59,3 +59,34 @@ hr{
     grid-column-start: 3;
     grid-column-end: 6;
 }
+
+@media only screen and (max-width: 1000px) {
+    .dashboard-container{
+    grid-template-rows: 700px 450px 720px;
+    }
+    .calories{
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+    
+    .water{
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+    
+    .macronutrients{
+        grid-column-start: 1;
+        grid-column-end: 6;
+    
+    }
+    
+    .recipe-idea{
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+    
+    .follow-up{
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+}

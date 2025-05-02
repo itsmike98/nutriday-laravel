@@ -81,8 +81,13 @@ Route::get('user-data-nutrition', function () {
     }
 });
 
+//Ruta para la pagina de informs
+Route::get('/informs', function () {
+    return Inertia::render('Informs/Informs');
+})->middleware(['auth', 'verified'])->name('informs');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/MealRoutes.php';
 require __DIR__ . '/AlimentRoutes.php';
 require __DIR__ . '/DashboardRoutes.php';
+require __DIR__ . '/InformsRoutes.php';

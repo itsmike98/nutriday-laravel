@@ -144,17 +144,33 @@ p {
 /* ==========================
       🔹 INPUTS
       ========================== */
-input{
+input {
     background-color: #222 !important;
     border: none !important;
     border-radius: 7px !important;
 }
+
 /* quitar outline en todos los inputs */
-[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus{
+[type='text']:focus,
+input:where(:not([type])):focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
     box-shadow: none;
 }
 
-select{
+select {
     background-color: #222 !important;
     border: none !important;
     border-radius: 7px !important;
@@ -162,24 +178,43 @@ select{
 
 /* ==========================
       🔹 SCROLLBAR
-      ========================== */
-      /* Estilizar el scrollbar */
-      html {
-        scrollbar-gutter: stable;
-      }
-      
+========================== */
+
+/* Estilizar el scrollbar */
+html {
+    scrollbar-gutter: stable;
+}
+
 ::-webkit-scrollbar {
-    width: 5px; /* Ancho del scrollbar */
-  }
-  
-  /* Fondo del scrollbar */
-  ::-webkit-scrollbar-track {
-    background: #222; /* Color de fondo */
-  }
-  
-  /* Barra de desplazamiento */
-  ::-webkit-scrollbar-thumb {
-    background: #c1c86d; /* Color de la barra */
-    border-radius: 10px; /* Bordes redondeados */
-  }
-  
+    width: 5px;
+    /* Ancho del scrollbar */
+}
+
+/* Fondo del scrollbar */
+::-webkit-scrollbar-track {
+    background: #222;
+    /* Color de fondo */
+}
+
+/* Barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+    background: #c1c86d;
+    /* Color de la barra */
+    border-radius: 10px;
+    /* Bordes redondeados */
+}
+
+/* ==========================
+      🔹 Tippy
+========================== */
+
+.tippy-box {
+    background-color: #191919 !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+}
+
+.tippy-title {
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+}

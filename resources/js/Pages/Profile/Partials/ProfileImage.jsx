@@ -7,7 +7,7 @@ const ProfileImage = ({auth}) => {
 
                 <div className="image-wrapper">
                     <img
-                        src="/assets/images/willy.jpg"
+                        src="/assets/images/willy.webp"
                         alt="borrar"
                         className="profile-image"
                     />

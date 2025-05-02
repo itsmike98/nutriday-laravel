@@ -12,7 +12,7 @@ export default function Macronutrients({ todayTotals }) {
         });
     }, []);
     return (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid md:grid-cols-3 md:gap-4">
             <div className=""><Proteins nutritionGoals={nutritionGoals} todayTotals={todayTotals} /></div>
             <div className=""><Carbohydrates nutritionGoals={nutritionGoals} todayTotals={todayTotals} /></div>
             <div className=""><Fats nutritionGoals={nutritionGoals} todayTotals={todayTotals} /></div>

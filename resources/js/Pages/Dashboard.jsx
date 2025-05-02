@@ -12,6 +12,7 @@ import 'tippy.js/dist/tippy.css';
 import RecipeIdea from './Dashboard_components/RecipeIdea';
 import "../../css/dashboard.css";
 import Water from './Dashboard_components/Water';
+import FollowUp from './Dashboard_components/FollowUp';
 
 function Dashboard() {
     const { auth } = usePage().props;
@@ -51,11 +52,13 @@ function Dashboard() {
 
                             <Tippy
                                 content={
-                                    <div className="">
-                                        <h3 className="">Calorie Information</h3>
+                                    <div className="tippy-box">
+                                        <h3 className="tippy-title">Calorie Information</h3>
+                                        <hr />
                                         <p className="">
                                             This section helps you track your daily calorie intake compared to your personal goal.
                                         </p>
+                                        <br />
                                         <ul className="">
                                             <li><strong className="text-avocado">Calories consumed:</strong> The total calories you’ve eaten today based on the foods you've logged.</li>
                                             <li><strong className="text-avocado">Daily goal:</strong> The target number of calories you should consume in a day, based on your physical data and activity level.</li>
@@ -83,11 +86,13 @@ function Dashboard() {
 
                             <Tippy
                                 content={
-                                    <div className="">
-                                        <h3 className="">Water Information</h3>
+                                    <div className="tippy-box">
+                                        <h3 className="tippy-title">Water Information</h3>
+                                        <hr />
                                         <p className="">
                                             Track your water intake and see how much more you need to reach your daily hydration goal.
                                         </p>
+                                        <br />
                                         <ul className="">
                                             <li><strong className="text-avocado">Water consumed:</strong> The total amount of water you’ve drunk today.</li>
                                             <li><strong className="text-avocado">Hydration goal:</strong> The target amount of water you should consume in a day based on your physical data.</li>
@@ -113,11 +118,13 @@ function Dashboard() {
 
                             <Tippy
                                 content={
-                                    <div className="">
-                                        <h3 className="">Macronutrients Information</h3>
+                                    <div className="tippy-box">
+                                        <h3 className="tippy-title">Macronutrients Information</h3>
+                                        <hr />
                                         <p className="">
                                             Learn about the macronutrients (carbs, protein, fats) in your meals and track your daily intake.
                                         </p>
+                                        <br />
                                         <ul className="">
                                             <li><strong className="text-avocado">Carbs:</strong> The total amount of carbohydrates you’ve consumed today.</li>
                                             <li><strong className="text-avocado">Protein:</strong> The total amount of protein you’ve consumed today.</li>
@@ -154,6 +161,7 @@ function Dashboard() {
                             <h3>Follow-up</h3>
                         </div>
                         <hr />
+                        <FollowUp/>
                     </div>
                 </div>
             </div>

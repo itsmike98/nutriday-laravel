@@ -122,8 +122,8 @@ function FoodLog() {
     return (
         <>
             <div className="bg-[#222] rounded-lg p-10 my-5">
-                <div className="flex justify-between items-center pb-5">
-                    <h3 className='font-semibold text-[1.3em]'>Food log</h3>
+                <div className="flex justify-between items-center ">
+                    <h3 className='font-bold text-[1.5em]'>Food log</h3>
                     <div className="flex items-center gap-2">
                         <button onClick={() => changeDate(false)} className="material-icons border-2 rounded-full">chevron_left</button>
                         <span className="font-bold text-center min-w-[80px] max-w-[80px] mr-3">
@@ -132,7 +132,7 @@ function FoodLog() {
                         <button onClick={() => changeDate(true)} className="material-icons border-2 rounded-full">chevron_right</button>
                     </div>
                 </div>
-                <hr className='pb-5' />
+                <hr className="mb-10" />
 
                 {/* COLUMNS */}
                 <div className="mb-10">

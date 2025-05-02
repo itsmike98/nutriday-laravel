@@ -41,9 +41,9 @@ const Calories = ({ todayTotals, userPhysicalData }) => {
     };
     return (
 
-        <div className="flex flex-row flex-1 rounded-lg overflow-hidden h-[270px] ">
+        <div className="flex flex-col md:flex-row flex-1 rounded-lg overflow-hidden h-700 md:h-[270px] gap-7 md:gap-0 ">
             {/* Parte izquierda: Gráfico */}
-            <div className="flex flex-col items-center justify-center w-1/2 relative">
+            <div className="flex flex-col items-center justify-center md:w-1/2 relative">
                 <Doughnut className="z-10" data={data} />
                 <Doughnut className="absolute" data={data2} />
                 <p className="flex flex-col gap-0 font-bold text-white text-[2em] absolute">
@@ -53,7 +53,7 @@ const Calories = ({ todayTotals, userPhysicalData }) => {
             </div>
 
             {/* Parte derecha: Información */}
-            <div className="flex flex-col justify-center w-1/2 bg-[#2a2a2a] p-4 rounded-xl shadow-lg">
+            <div className="flex flex-col justify-center md:w-1/2 bg-[#2a2a2a] p-4 rounded-xl shadow-lg">
                 {/* Calories Goal */}
                 <div className="flex flex-row items-center gap-2 mb-6">
                     <span className="material-icons text-[#8a8a8a] !text-[2.5em]">local_fire_department</span>
@@ -77,7 +77,7 @@ const Calories = ({ todayTotals, userPhysicalData }) => {
                     className="w-full py-3 bg-[#transparent] border-2 border-[#C1C86D] text-white font-semibold rounded-lg hover:bg-[#C1C86D] transition duration-300"
                     onClick={() => window.location.href = '/food-log'}
                 >
-                    Añadir alimento
+                    Add aliment
                 </button>
             </div>
         </div>

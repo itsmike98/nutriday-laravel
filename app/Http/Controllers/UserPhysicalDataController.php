@@ -79,6 +79,7 @@ class UserPhysicalDataController extends Controller
         ]);
     }
 
+    //!---------CALCULOS CALORIAS Y MACROS-----------
 
     private function calculateAndRespond($data)
     {
