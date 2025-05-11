@@ -74,7 +74,6 @@ function Survey() {
                     console.error("Error sending data:", error.message);
                 }
             });
-        alert("Survey completed! Wait a second, we are processing your data.");
     };
 
     return (

@@ -30,7 +30,7 @@ export default function Layout({ children }) {
 
                 {/* Right Side */}
                 <div className="flex items-center gap-6">
-                    <span className="text-gray-400 hover:text-white transition" >10/22/2025</span>
+                    <span className="text-gray-400 hover:text-white transition" >07/05/2025</span>
                     <button onClick={logout} className="text-gray-400 hover:text-white transition">Log out</button>
                 </div>
             </header>

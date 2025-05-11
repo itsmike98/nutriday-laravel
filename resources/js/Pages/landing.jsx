@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { gsap } from "gsap";
 import Header from "../Components/landing/Header";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -13,17 +14,36 @@ import TextRevealSecction from "@/Components/landing/TextRevealSecction";
 
 export default function Landing({ loginRoute, registerRoute }) {
     let chartColors = ["#D06363", "#638FD0", "#8DB768"];
+
+
+    useEffect(() => {
+        const floatingImages = gsap.utils.toArray(".floating-img");
+
+        floatingImages.forEach((img) => {
+            gsap.to(img, {
+                y: () => gsap.utils.random(-80, 80), // sube y baja entre -20 y +20 px
+                x: () => gsap.utils.random(-30, 30), // opcional: mueve un poco en horizontal
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                duration: () => gsap.utils.random(2, 4), // duración entre 2 y 4 seg
+                delay: () => gsap.utils.random(0, 4), // desincroniza
+            });
+        });
+    }, []);
+
+
     return (
         <>
             <nav>
-                <div class="nav-container">
+                <div className="nav-container">
                     <div>
                         <img src="assets/images/Imagen-corporativa/nav-logotipo.png" alt="nutriday_logo" className="h-14" />
                     </div>
                     <div>
-                        <a href={loginRoute} class="nav-item">Login</a>
+                        <a href={loginRoute} className="nav-item">Login</a>
                         <span>|</span>
-                        <a href={registerRoute} class="nav-item">Register</a>
+                        <a href={registerRoute} className="nav-item">Register</a>
                     </div>
                 </div>
             </nav>
@@ -35,7 +55,7 @@ export default function Landing({ loginRoute, registerRoute }) {
                 {/* texto inicial con efecto scroll */}
                 <TextRevealSecction />
                 {/* contenedor principal con margenes */}
-                <div className="xl:mx-[10%] lg:mx-[7%] md:mx-[4%] max-sm:mx-[4%] flex flex-col items-center">
+                <div className="xl:mx-[10%] lg:mx-[7%] md:mx-[4%] max-sm:mx-[4%] flex flex-col items-center mt-32">
                     {/* calories section */}
                     <div
                         id="calories-section"
@@ -109,7 +129,7 @@ export default function Landing({ loginRoute, registerRoute }) {
                             <div className="calories-counter">
                                 <span>
                                     kcal <br />
-                                    <span className="kcal-number">000</span>
+                                    <span className="kcal-number">234</span>
                                 </span>
                             </div>
                         </div>
@@ -138,10 +158,10 @@ export default function Landing({ loginRoute, registerRoute }) {
                                         ></div>
                                         <div>
                                             <p className="font-semibold text-[#BBBBBB]">
-                                                Carbohydrates
+                                                Fats
                                             </p>
                                             <p className="font-bold">
-                                                00.0<span> g</span>
+                                                12.5<span> g</span>
                                             </p>
                                         </div>
                                     </div>
@@ -157,7 +177,7 @@ export default function Landing({ loginRoute, registerRoute }) {
                                                 Carbohydrates
                                             </p>
                                             <p className="font-bold">
-                                                00.0<span> g</span>
+                                                27.1<span> g</span>
                                             </p>
                                         </div>
                                     </div>
@@ -170,10 +190,10 @@ export default function Landing({ loginRoute, registerRoute }) {
                                         ></div>
                                         <div>
                                             <p className="font-semibold text-[#BBBBBB]">
-                                                Carbohydrates
+                                                Proteins
                                             </p>
                                             <p className="font-bold">
-                                                00.0<span> g</span>
+                                                43.7<span> g</span>
                                             </p>
                                         </div>
                                     </div>
@@ -315,23 +335,23 @@ m1147 -329 l0 -420 -27 6 c-77 17 -113 27 -160 44 -251 92 -452 276 -567 521
                                     >
                                         <path
                                             d="M2221 4774 c-845 -131 -1547 -740 -1802 -1564 -212 -683 -74 -1434
-368 -2013 350 -457 873 -765 1448 -852 147 -22 191 -20 220 10 l25 24 0 2179
-0 2179 -21 27 c-18 23 -27 26 -82 25 -34 -1 -104 -7 -156 -15z"
+                                                368 -2013 350 -457 873 -765 1448 -852 147 -22 191 -20 220 10 l25 24 0 2179
+                                                0 2179 -21 27 c-18 23 -27 26 -82 25 -34 -1 -104 -7 -156 -15z"
                                         />
                                         <path
                                             d="M2661 4764 c-21 -27 -21 -30 -21 -1051 l0 -1024 25 -24 24 -25 1026
-0 1026 0 24 25 c30 29 32 72 10 220 -118 793 -665 1476 -1411 1764 -188 73
--489 141 -624 141 -51 0 -61 -3 -79 -26z"
+                                                0 1026 0 24 25 c30 29 32 72 10 220 -118 793 -665 1476 -1411 1764 -188 73
+                                                -489 141 -624 141 -51 0 -61 -3 -79 -26z"
                                         />
                                         <path
                                             d="M2895 2455 c-17 -16 -25 -35 -25 -57 0 -31 52 -85 648 -681 524 -524
-652 -647 673 -647 37 0 67 27 147 133 183 240 315 507 386 782 34 127 66 323
-66 397 0 49 -3 59 -26 77 -27 21 -31 21 -936 21 l-909 0 -24 -25z"
+                                                652 -647 673 -647 37 0 67 27 147 133 183 240 315 507 386 782 34 127 66 323
+                                                66 397 0 49 -3 59 -26 77 -27 21 -31 21 -936 21 l-909 0 -24 -25z"
                                         />
                                         <path
                                             d="M2665 2225 l-25 -24 0 -911 0 -911 25 -24 c29 -30 76 -32 228 -10
-379 57 734 210 1044 452 92 71 113 96 113 133 0 19 -135 160 -647 672 -596
-596 -650 648 -681 648 -22 0 -41 -8 -57 -25z"
+                                                379 57 734 210 1044 452 92 71 113 96 113 133 0 19 -135 160 -647 672 -596
+                                                596 -650 648 -681 648 -22 0 -41 -8 -57 -25z"
                                         />
                                     </g>
                                 </svg>
@@ -351,39 +371,41 @@ m1147 -329 l0 -420 -27 6 c-77 17 -113 27 -160 44 -251 92 -452 276 -567 521
                 </div>
                 <div className="reach-your-goals flex flex-col items-center justify-center h-[800px] w-[100%] relative mt-32">
                     <h2>Ready to reach your goals?</h2>
-                    <button className="mt-7 font-bold border-4 border-[#c7c7c7] px-8 py-1 rounded-xl hover:bg-[#c7c7c7] hover:px-12 hover:text-stone-900 ease-in duration-300">
-                        Join us!
-                    </button>
+                    <a href={loginRoute} className="inline-block">
+                        <button className="mt-7 font-bold border-4 border-[#c7c7c7] px-8 py-1 rounded-xl hover:bg-[#c7c7c7] hover:px-12 hover:text-stone-900 ease-in duration-300">
+                            Join us!
+                        </button>
+                    </a>
                     <img
-                        className="w-24 absolute left-[5%] bottom-[30%]"
+                        className="floating-img w-24 absolute left-[5%] bottom-[30%]"
                         src="assets/images/floating-item-1.png"
                     />
                     <img
-                        className="w-16 absolute left-[22%] top-[20%] blur-sm"
+                        className="floating-img w-16 absolute left-[22%] top-[20%] blur-sm"
                         src="assets/images/floating-item-2.png"
                     />
                     <img
-                        className="w-20 absolute right-[40%] bottom-[20%]"
+                        className="floating-img w-20 absolute right-[40%] bottom-[20%]"
                         src="assets/images/floating-item-3.png"
                     />
                     <img
-                        className="w-24 absolute right-[5%] top-[30%] blur-[1px]"
+                        className="floating-img w-24 absolute right-[5%] top-[30%] blur-[1px]"
                         src="assets/images/floating-item-4.png"
                     />
                     <img
-                        className="w-20 absolute right-[30%] top-[15%] blur-sm"
+                        className="floating-img w-20 absolute right-[30%] top-[15%] blur-sm"
                         src="assets/images/floating-item-5.png"
                     />
                     <img
-                        className="w-16 absolute left-[25%] bottom-[13%] blur-sm"
+                        className="floating-img w-16 absolute left-[25%] bottom-[13%] blur-sm"
                         src="assets/images/floating-item-6.png"
                     />
                     <img
-                        className="w-24 absolute left-[40%] top-[25%] "
+                        className="floating-img w-24 absolute left-[40%] top-[25%] "
                         src="assets/images/floating-item-2.png"
                     />
                     <img
-                        className="w-20 absolute right-[15%] bottom-[20%] blur-[2px] "
+                        className="floating-img w-20 absolute right-[15%] bottom-[20%] blur-[2px] "
                         src="assets/images/floating-item-5.png"
                     />
                 </div>

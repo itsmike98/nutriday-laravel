@@ -47,7 +47,7 @@ export default function AddAlimentForm({ mealTitle, mealId, close, setNewAliment
 
     return (
         <>
-            <div className="modal w-full max-h-[90vh] flex flex-col p-4 overflow-hidden">
+            <div className="aliment-modal modal w-full max-h-[90vh] flex flex-col p-4 overflow-hidden">
                 {/* Header */}
                 <div className="flex justify-between border-b pb-2 border-neutral-400">
                     <h3 className="header font-bold text-[1.3em]">Add aliment or recipe</h3>
@@ -64,7 +64,6 @@ export default function AddAlimentForm({ mealTitle, mealId, close, setNewAliment
                             <h4 className="mb-2">Search type</h4>
                             <select className="w-full bg-[#222] text-white p-2 rounded-md border border-[#444]">
                                 <option value="aliment">Aliment</option>
-                                <option value="recipe">Recipe</option>
                             </select>
                         </div>
 

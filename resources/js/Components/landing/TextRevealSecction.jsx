@@ -17,7 +17,7 @@ export default function TextRevealSection() {
                 ease: "none",
                 scrollTrigger: {
                     trigger: line,
-                    markers: true,
+                    markers: false,
                     scrub: 1,
                     start: "top center",
                     end: "bottom center",

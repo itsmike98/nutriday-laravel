@@ -131,8 +131,10 @@ p {
 .popup-content {
     background: none !important;
     border: none !important;
-    width: 85% !important;
+    width: auto !important;
     height: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .modal {

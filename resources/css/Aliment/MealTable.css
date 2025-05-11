@@ -87,3 +87,9 @@
       text-align: left;
     }
   }
+
+  .popup-content:has(> .aliment-modal) {
+    width: 85% !important;
+  }
+  
+  

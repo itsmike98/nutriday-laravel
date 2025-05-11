@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 import 'material-icons/iconfont/material-icons.css';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import 'reactjs-popup/dist/index.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

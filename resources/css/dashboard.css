@@ -10,7 +10,7 @@
 
 .card{
     background-color: #222;
-    padding: 40px;
+    padding: 40px !important;
     border-radius: 15px;
 }
 
@@ -20,8 +20,8 @@
     justify-content: space-between;
 }
 
-.card-title h3{
-    font-size: 1.5em;
+.card-title h3 {
+    font-size: 1em !important;
     font-weight: bold;
 }
 

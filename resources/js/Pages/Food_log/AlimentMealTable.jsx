@@ -37,11 +37,11 @@ export default function AlimentMealTable({ aliment, mealId, onDelete }) {
                         {aliment.aliment_name}
                     </span>
                 </td>
-                <td>{aliment.pivot.serving_amount}</td>
-                <td>{aliment.pivot.calories} <span>g</span></td>
+                <td>{aliment.pivot.serving_amount} <span>g</span></td>
+                <td>{aliment.pivot.calories} <span>kcal</span></td>
                 <td>{aliment.pivot.carbs} <span>g</span></td>
-                <td>{aliment.pivot.fat}</td>
-                <td>{aliment.pivot.protein}</td>
+                <td>{aliment.pivot.fat} <span>g</span></td>
+                <td>{aliment.pivot.protein} <span>g</span></td>
             </tr>
         </>
     )

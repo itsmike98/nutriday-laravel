@@ -68,4 +68,9 @@ class User extends Authenticatable
     public function nutritionGoal() {
         return $this->hasOne(nutrition_goals::class);
     }
+
+    public function weightLog()
+    {
+        return $this->hasOne(weight_log::class);
+    }
 }
