@@ -38,7 +38,7 @@ COPY --from=build /usr/bin/composer /usr/bin/composer
 COPY --from=build /var/www /var/www
 
 # Exponer puerto 8000 (por defecto con artisan serve)
-EXPOSE 8000
+EXPOSE ${PORT:-8000}
 
 # Comando para iniciar Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
