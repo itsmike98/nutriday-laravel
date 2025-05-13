@@ -53,7 +53,7 @@ function Dashboard() {
                             <Tippy
                                 content={
                                     <div className="tippy-box">
-                                        <h3 className="tippy-title">Calorie Information</h3>
+                                        <h3 className="tippy-title">Calorie information</h3>
                                         <hr />
                                         <p className="">
                                             This section helps you track your daily calorie intake compared to your personal goal.
