@@ -9,10 +9,10 @@ export default defineConfig({
         strictPort: true,
         cors: true,
         hmr: {
-          protocol: "ws",
-          host: "localhost",
+            protocol: "wss",
+            host: "localhost",
         },
-      },
+    },
     plugins: [
         laravel({
             input: "resources/js/app.jsx",
@@ -25,5 +25,8 @@ export default defineConfig({
             "@js": "/resources/js",
             "@css": "/resources/css",
         },
+    },
+    build: {
+        outDir: 'public/build', // o la ruta que uses para tus archivos generados
     },
 });
