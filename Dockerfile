@@ -41,4 +41,4 @@ COPY --from=build /var/www /var/www
 EXPOSE ${PORT:-8000}
 
 # Comando para iniciar Laravel
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+CMD sh -c "tail -f storage/logs/laravel.log & php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
