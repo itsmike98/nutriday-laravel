@@ -6,7 +6,7 @@ export default defineConfig({
     server: {
         host: true,
         strictPort: true,
-        cors: true, // Activa CORS para evitar bloqueos
+        cors: true,
         hmr: {
           protocol: "ws",
           host: "localhost",
