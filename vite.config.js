@@ -26,7 +26,11 @@ export default defineConfig({
             "@css": "/resources/css",
         },
     },
-    build: {
-        outDir: 'public/build', // o la ruta que uses para tus archivos generados
+     build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: 'resources/js/app.jsx',
+        }
     },
 });
