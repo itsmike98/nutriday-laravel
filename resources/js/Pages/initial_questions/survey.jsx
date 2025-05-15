@@ -62,7 +62,7 @@ function Survey() {
     //guardar los datos del cuestionario en la base de datos
     const finishSurvey = () => {
         console.log('these are the anwers:', answers);
-        axios.post('http://nutriday.local/guardar-datos', answers)
+        axios.post('/guardar-datos', answers)
             .then(function (response) {
                 console.log("Server response:", response.data);
                 setCalories(response.data.finalCalories);
