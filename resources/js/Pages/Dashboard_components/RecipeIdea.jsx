@@ -15,7 +15,6 @@ export default function RecipeIdea() {
     axios
       .get("/random-recipe")
       .then((response) => {
-        console.log(response.data);
         setRecipe(response.data.recipe);
         setIsLoading(false);
       })

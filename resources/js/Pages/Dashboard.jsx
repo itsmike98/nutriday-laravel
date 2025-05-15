@@ -150,7 +150,7 @@ function Dashboard() {
                             <h3 className=''>Recipe idea</h3>
                         </div>
                         <hr />
-                        <RecipeIdea />
+                        {/* <RecipeIdea /> */}
                     </div>
                 </div>
 
