@@ -9,7 +9,6 @@ export default defineConfig(({ command }) => ({
         strictPort: true,
         cors: true,
         hmr: {
-            protocol: "wss",
             host: "localhost",
         },
     },

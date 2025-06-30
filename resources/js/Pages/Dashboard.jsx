@@ -9,7 +9,6 @@ import axios from 'axios';
 import Macronutrients from './Dashboard_components/Macronutrients';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import RecipeIdea from './Dashboard_components/RecipeIdea';
 import "../../css/dashboard.css";
 import Water from './Dashboard_components/Water';
 import FollowUp from './Dashboard_components/FollowUp';
